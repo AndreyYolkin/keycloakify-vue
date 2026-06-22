@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist_keycloak/
+.keycloakify/
+*.log
+
+# Planning docs are kept local, not committed (per user preference)
+docs/superpowers/

@@ -1,0 +1,30 @@
+{
+  "name": "keycloakify-vue-poc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build-keycloak-theme": "yarn build && keycloakify build",
+    "typecheck": "vue-tsc --noEmit",
+    "postinstall": "node scripts/link-custom-handler.mjs"
+  },
+  "bin": {
+    "_keycloakify-custom-handler": "./bin/main.ts"
+  },
+  "dependencies": {
+    "vue": "^3.5.38"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.7",
+    "dompurify": "^3.4.11",
+    "keycloakify": "^11.15.10",
+    "tsafe": "^1.8.12",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9",
+    "vue-tsc": "^3.3.5"
+  }
+}
