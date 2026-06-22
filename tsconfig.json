@@ -12,5 +12,5 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["vite/client"]
   },
-  "include": ["src", "bin", "test", "vite.config.ts"]
+  "include": ["src", "bin", "test", "vite.config.ts", "vitest.config.ts"]
 }

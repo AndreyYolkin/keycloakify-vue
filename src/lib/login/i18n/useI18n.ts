@@ -6,7 +6,7 @@ import type { GenericI18n_noJsx } from "keycloakify/login/i18n/noJsx/GenericI18n
 import { createGetI18n, type KcContextLike } from "keycloakify/login/i18n/noJsx/getI18n";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import { Reflect } from "tsafe/Reflect";
-import { getCurrentInstance, h, onMounted, ref, type Ref, type VNode } from "vue";
+import { getCurrentInstance, h, onMounted, onUnmounted, ref, type Ref, type VNode } from "vue";
 import type { GenericI18n_vue } from "./i18n";
 
 export type ReturnTypeOfCreateUseI18n<
@@ -96,6 +96,9 @@ export function createUseI18n<
         if (getCurrentInstance() !== null) {
             onMounted(() => {
                 let isActive = true;
+                onUnmounted(() => {
+                    isActive = false;
+                });
                 prI18n_currentLanguage?.then(i18n_currentLanguage => {
                     if (!isActive) {
                         return;
