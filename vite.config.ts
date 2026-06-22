@@ -9,5 +9,5 @@ export default defineConfig({
             themeName: "keycloakify-vue-poc",
             accountThemeImplementation: "none"
         })
-    ]
+    ],
 });
