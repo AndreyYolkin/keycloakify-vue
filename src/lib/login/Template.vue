@@ -52,7 +52,7 @@ const headerSection = () => {
 };
 
 function onTryAnotherWay() {
-    (document.forms as any)["kc-select-try-another-way-form"].requestSubmit();
+    (document.getElementById("kc-select-try-another-way-form") as HTMLFormElement).requestSubmit();
 }
 </script>
 

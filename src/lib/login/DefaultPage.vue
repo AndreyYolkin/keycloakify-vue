@@ -5,6 +5,8 @@ import type { ClassKey } from "./TemplateProps";
 import type { I18n } from "./i18n/i18n";
 import NotImplemented from "./pages/NotImplemented.vue";
 
+const Login = defineAsyncComponent(() => import("./pages/Login.vue"));
+
 const props = defineProps<{
     kcContext: KcContext;
     i18n: I18n;
@@ -16,7 +18,7 @@ const props = defineProps<{
 const pageComponent = computed<Component>(() => {
     switch (props.kcContext.pageId) {
         case "login.ftl":
-            return defineAsyncComponent(() => import("./pages/Login.vue"));
+            return Login;
         default:
             return NotImplemented;
     }
