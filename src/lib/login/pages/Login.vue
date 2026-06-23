@@ -15,7 +15,6 @@ const { kcClsx } = getKcClsx({ doUseDefaultCss: props.doUseDefaultCss, classes: 
 const kcContext = props.kcContext;
 const { social, realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField } = kcContext;
 
-const i18n = computed(() => props.i18n.value);
 const isLoginButtonDisabled = ref(false);
 
 const usernameLabelKey = computed(() =>
@@ -32,7 +31,7 @@ function onSubmit() {
     <component
         :is="Template"
         :kcContext="kcContext"
-        :i18n="props.i18n"
+        :i18n="i18n"
         :doUseDefaultCss="doUseDefaultCss"
         :classes="classes"
         :displayMessage="!messagesPerField.existsError('username', 'password')"
@@ -119,7 +118,7 @@ function onSubmit() {
                         <label for="password" :class="kcClsx('kcLabelClass')">
                             <component :is="i18n.msg('password')" />
                         </label>
-                        <PasswordWrapper :kcClsx="kcClsx" :i18n="props.i18n" passwordInputId="password">
+                        <PasswordWrapper :kcClsx="kcClsx" :i18n="i18n" passwordInputId="password">
                             <input
                                 :tabindex="3"
                                 id="password"

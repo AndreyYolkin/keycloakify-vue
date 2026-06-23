@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import type { KcClsx } from "keycloakify/login/lib/kcClsx";
 import { assert } from "keycloakify/tools/assert";
-import { computed, ref, watch, type Ref } from "vue";
+import { ref, watch } from "vue";
 import type { I18n } from "../i18n/i18n";
 
 const props = defineProps<{
     kcClsx: KcClsx;
-    i18n: Ref<I18n>;
+    i18n: I18n;
     passwordInputId: string;
 }>();
 
-const i18n = computed(() => props.i18n.value);
 const isPasswordRevealed = ref(false);
 
 watch(

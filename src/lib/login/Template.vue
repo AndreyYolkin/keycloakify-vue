@@ -18,14 +18,13 @@ const props = withDefaults(defineProps<TemplateProps<KcContext, I18n>>(), {
 
 const { kcClsx } = getKcClsx({ doUseDefaultCss: props.doUseDefaultCss, classes: props.classes });
 
-const i18n = computed(() => props.i18n.value);
 const kcContext = props.kcContext;
 const { realm, auth, url, message, isAppInitiatedAction } = kcContext;
 
 const slots = useSlots();
 
 onMounted(() => {
-    document.title = props.documentTitle ?? props.i18n.value.msgStr("loginTitle", kcContext.realm.displayName);
+    document.title = props.documentTitle ?? props.i18n.msgStr("loginTitle", kcContext.realm.displayName);
 });
 
 useSetClassName({ qualifiedName: "html", className: kcClsx("kcHtmlClass") });
@@ -43,10 +42,10 @@ const headerSection = () => {
         h("label", { id: "kc-attempted-username" }, auth!.attemptedUsername),
         h(
             "a",
-            { id: "reset-login", href: url.loginRestartFlowUrl, "aria-label": i18n.value.msgStr("restartLoginTooltip") },
+            { id: "reset-login", href: url.loginRestartFlowUrl, "aria-label": props.i18n.msgStr("restartLoginTooltip") },
             h("div", { class: "kc-login-tooltip" }, [
                 h("i", { class: kcClsx("kcResetFlowIcon") }),
-                h("span", { class: "kc-tooltip-text" }, i18n.value.msgStr("restartLoginTooltip"))
+                h("span", { class: "kc-tooltip-text" }, props.i18n.msgStr("restartLoginTooltip"))
             ])
         )
     ]);
