@@ -1,0 +1,14 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build output
+dist/
+dist_keycloak/
+storybook-static/
+
+# Local planning docs (gitignored)
+docs/
+
+CHANGELOG.md

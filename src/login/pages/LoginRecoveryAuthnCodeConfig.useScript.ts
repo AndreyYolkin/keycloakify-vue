@@ -1,30 +1,27 @@
-import { onMounted } from "vue";
-import { useInsertScriptTags } from "../../tools/useInsertScriptTags";
-import { waitForElementMountedOnDom } from "keycloakify/tools/waitForElementMountedOnDom";
+import { onMounted } from 'vue';
+import { useInsertScriptTags } from '../../tools/useInsertScriptTags';
+import { waitForElementMountedOnDom } from 'keycloakify/tools/waitForElementMountedOnDom';
 
 type I18nLike = {
   msgStr: (
     key:
-      | "recovery-codes-download-file-header"
-      | "recovery-codes-download-file-description"
-      | "recovery-codes-download-file-date",
+      | 'recovery-codes-download-file-header'
+      | 'recovery-codes-download-file-description'
+      | 'recovery-codes-download-file-date',
   ) => string;
   isFetchingTranslations: boolean;
 };
 
-export function useScript(params: {
-  olRecoveryCodesListId: string;
-  i18n: I18nLike;
-}) {
+export function useScript(params: { olRecoveryCodesListId: string; i18n: I18nLike }) {
   const { olRecoveryCodesListId, i18n } = params;
 
   const { msgStr, isFetchingTranslations } = i18n;
 
   const { insertScriptTags } = useInsertScriptTags({
-    componentOrHookName: "LoginRecoveryAuthnCodeConfig",
+    componentOrHookName: 'LoginRecoveryAuthnCodeConfig',
     scriptTags: [
       {
-        type: "text/javascript",
+        type: 'text/javascript',
         textContent: () => `
 
                     /* copy recovery codes  */
@@ -85,10 +82,10 @@ export function useScript(params: {
                         };
 
                         return fileBodyContent =
-                            ${JSON.stringify(msgStr("recovery-codes-download-file-header"))} + "\\n\\n" +
+                            ${JSON.stringify(msgStr('recovery-codes-download-file-header'))} + "\\n\\n" +
                             recoveryCodeList + "\\n" +
-                            ${JSON.stringify(msgStr("recovery-codes-download-file-description"))} + "\\n\\n" +
-                            ${JSON.stringify(msgStr("recovery-codes-download-file-date"))} + " " + formatCurrentDateTime();
+                            ${JSON.stringify(msgStr('recovery-codes-download-file-description'))} + "\\n\\n" +
+                            ${JSON.stringify(msgStr('recovery-codes-download-file-date'))} + " " + formatCurrentDateTime();
                     }
 
                     function setUpDownloadLinkAndDownload(filename, text) {
@@ -120,10 +117,10 @@ export function useScript(params: {
                         return printFileContent =
                             "<html><style>" + styles + "</style><body>" +
                             "<title>kc-download-recovery-codes</title>" +
-                            "<p>" + ${JSON.stringify(msgStr("recovery-codes-download-file-header"))} + "</p>" +
+                            "<p>" + ${JSON.stringify(msgStr('recovery-codes-download-file-header'))} + "</p>" +
                             "<div>" + recoveryCodeListHTML + "</div>" +
-                            "<p>" + ${JSON.stringify(msgStr("recovery-codes-download-file-description"))} + "</p>" +
-                            "<p>" + ${JSON.stringify(msgStr("recovery-codes-download-file-date"))} + " " + formatCurrentDateTime() + "</p>" +
+                            "<p>" + ${JSON.stringify(msgStr('recovery-codes-download-file-description'))} + "</p>" +
+                            "<p>" + ${JSON.stringify(msgStr('recovery-codes-download-file-date'))} + " " + formatCurrentDateTime() + "</p>" +
                             "</body></html>";
                     }
 

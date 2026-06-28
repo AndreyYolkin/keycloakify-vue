@@ -1,8 +1,8 @@
-import { onMounted, watch, type Ref } from "vue";
-import { useInsertScriptTags } from "../../tools/useInsertScriptTags";
-import { assert } from "keycloakify/tools/assert";
-import { waitForElementMountedOnDom } from "keycloakify/tools/waitForElementMountedOnDom";
-import type { KcContext } from "keycloakify/login/KcContext";
+import { onMounted, watch, type Ref } from 'vue';
+import { useInsertScriptTags } from '../../tools/useInsertScriptTags';
+import { assert } from 'keycloakify/tools/assert';
+import { waitForElementMountedOnDom } from 'keycloakify/tools/waitForElementMountedOnDom';
+import type { KcContext } from 'keycloakify/login/KcContext';
 
 type KcContextLike = {
   url: {
@@ -22,26 +22,20 @@ type KcContextLike = {
   excludeCredentialIds: string;
 };
 
-assert<
-  keyof KcContextLike extends keyof KcContext.WebauthnRegister ? true : false
->();
+assert<keyof KcContextLike extends keyof KcContext.WebauthnRegister ? true : false>();
 assert<KcContext.WebauthnRegister extends KcContextLike ? true : false>();
 
 type I18nLike = {
   msgStr: (
     key:
-      | "webauthn-registration-init-label"
-      | "webauthn-registration-init-label-prompt"
-      | "webauthn-unsupported-browser-text",
+      | 'webauthn-registration-init-label'
+      | 'webauthn-registration-init-label-prompt'
+      | 'webauthn-unsupported-browser-text',
   ) => string;
   isFetchingTranslations: boolean;
 };
 
-export function useScript(params: {
-  authButtonId: string;
-  kcContext: KcContextLike;
-  i18n: Ref<I18nLike>;
-}) {
+export function useScript(params: { authButtonId: string; kcContext: KcContextLike; i18n: Ref<I18nLike> }) {
   const { authButtonId, kcContext, i18n } = params;
 
   const {
@@ -61,10 +55,10 @@ export function useScript(params: {
   } = kcContext;
 
   const { insertScriptTags } = useInsertScriptTags({
-    componentOrHookName: "WebauthnRegister",
+    componentOrHookName: 'WebauthnRegister',
     scriptTags: [
       {
-        type: "module",
+        type: 'module',
         textContent: () => `
                     import { registerByWebAuthn } from "${url.resourcesPath}/js/webauthnRegister.js";
                     const registerButton = document.getElementById('${authButtonId}');
@@ -82,9 +76,9 @@ export function useScript(params: {
                             userVerificationRequirement : ${JSON.stringify(userVerificationRequirement)},
                             createTimeout : ${createTimeout},
                             excludeCredentialIds : ${JSON.stringify(excludeCredentialIds)},
-                            initLabel : ${JSON.stringify(i18n.value.msgStr("webauthn-registration-init-label"))},
-                            initLabelPrompt : ${JSON.stringify(i18n.value.msgStr("webauthn-registration-init-label-prompt"))},
-                            errmsg : ${JSON.stringify(i18n.value.msgStr("webauthn-unsupported-browser-text"))}
+                            initLabel : ${JSON.stringify(i18n.value.msgStr('webauthn-registration-init-label'))},
+                            initLabelPrompt : ${JSON.stringify(i18n.value.msgStr('webauthn-registration-init-label-prompt'))},
+                            errmsg : ${JSON.stringify(i18n.value.msgStr('webauthn-unsupported-browser-text'))}
                         };
                         registerByWebAuthn(input);
                     });

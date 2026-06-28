@@ -1,53 +1,38 @@
-import { onMounted, watch, type Ref } from "vue";
-import { useInsertScriptTags } from "../../tools/useInsertScriptTags";
-import { assert } from "keycloakify/tools/assert";
-import { waitForElementMountedOnDom } from "keycloakify/tools/waitForElementMountedOnDom";
-import type { KcContext } from "keycloakify/login/KcContext";
+import { onMounted, watch, type Ref } from 'vue';
+import { useInsertScriptTags } from '../../tools/useInsertScriptTags';
+import { assert } from 'keycloakify/tools/assert';
+import { waitForElementMountedOnDom } from 'keycloakify/tools/waitForElementMountedOnDom';
+import type { KcContext } from 'keycloakify/login/KcContext';
 
 type KcContextLike = {
   url: {
     resourcesPath: string;
   };
-  isUserIdentified: "true" | "false";
+  isUserIdentified: 'true' | 'false';
   challenge: string;
-  userVerification: KcContext.WebauthnAuthenticate["userVerification"];
+  userVerification: KcContext.WebauthnAuthenticate['userVerification'];
   rpId: string;
   createTimeout: number | string;
 };
 
-assert<
-  keyof KcContextLike extends keyof KcContext.WebauthnAuthenticate
-    ? true
-    : false
->();
+assert<keyof KcContextLike extends keyof KcContext.WebauthnAuthenticate ? true : false>();
 assert<KcContext.WebauthnAuthenticate extends KcContextLike ? true : false>();
 
 type I18nLike = {
-  msgStr: (key: "webauthn-unsupported-browser-text") => string;
+  msgStr: (key: 'webauthn-unsupported-browser-text') => string;
   isFetchingTranslations: boolean;
 };
 
-export function useScript(params: {
-  authButtonId: string;
-  kcContext: KcContextLike;
-  i18n: Ref<I18nLike>;
-}) {
+export function useScript(params: { authButtonId: string; kcContext: KcContextLike; i18n: Ref<I18nLike> }) {
   const { authButtonId, kcContext, i18n } = params;
 
-  const {
-    url,
-    isUserIdentified,
-    challenge,
-    userVerification,
-    rpId,
-    createTimeout,
-  } = kcContext;
+  const { url, isUserIdentified, challenge, userVerification, rpId, createTimeout } = kcContext;
 
   const { insertScriptTags } = useInsertScriptTags({
-    componentOrHookName: "WebauthnAuthenticate",
+    componentOrHookName: 'WebauthnAuthenticate',
     scriptTags: [
       {
-        type: "module",
+        type: 'module',
         textContent: () => `
 
                     import { authenticateByWebAuthn } from "${url.resourcesPath}/js/webauthnAuthenticate.js";
@@ -59,7 +44,7 @@ export function useScript(params: {
                             userVerification : '${userVerification}',
                             rpId : '${rpId}',
                             createTimeout : ${createTimeout},
-                            errmsg : ${JSON.stringify(i18n.value.msgStr("webauthn-unsupported-browser-text"))}
+                            errmsg : ${JSON.stringify(i18n.value.msgStr('webauthn-unsupported-browser-text'))}
                         };
                         authenticateByWebAuthn(input);
                     });

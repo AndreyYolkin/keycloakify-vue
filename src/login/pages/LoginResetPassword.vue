@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-reset-password.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -38,7 +35,10 @@ const { url, realm, auth, messagesPerField } = kcContext;
         v-if="realm.duplicateEmailsAllowed"
         :is="i18n.msg('emailInstructionUsername')"
       />
-      <component v-else :is="i18n.msg('emailInstruction')" />
+      <component
+        v-else
+        :is="i18n.msg('emailInstruction')"
+      />
     </template>
 
     <form
@@ -49,7 +49,10 @@ const { url, realm, auth, messagesPerField } = kcContext;
     >
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcLabelWrapperClass')">
-          <label for="username" :class="kcClsx('kcLabelClass')">
+          <label
+            for="username"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component
               v-if="!realm.loginWithEmailAllowed"
               :is="i18n.msg('username')"
@@ -58,7 +61,10 @@ const { url, realm, auth, messagesPerField } = kcContext;
               v-else-if="!realm.registrationEmailAsUsername"
               :is="i18n.msg('usernameOrEmail')"
             />
-            <component v-else :is="i18n.msg('email')" />
+            <component
+              v-else
+              :is="i18n.msg('email')"
+            />
           </label>
         </div>
         <div :class="kcClsx('kcInputWrapperClass')">
@@ -81,26 +87,23 @@ const { url, realm, auth, messagesPerField } = kcContext;
         </div>
       </div>
       <div :class="kcClsx('kcFormGroupClass', 'kcFormSettingClass')">
-        <div id="kc-form-options" :class="kcClsx('kcFormOptionsClass')">
+        <div
+          id="kc-form-options"
+          :class="kcClsx('kcFormOptionsClass')"
+        >
           <div :class="kcClsx('kcFormOptionsWrapperClass')">
             <span>
-              <a :href="url.loginUrl"
-                ><component :is="i18n.msg('backToLogin')"
-              /></a>
+              <a :href="url.loginUrl"><component :is="i18n.msg('backToLogin')" /></a>
             </span>
           </div>
         </div>
 
-        <div id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <div
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <input
-            :class="
-              kcClsx(
-                'kcButtonClass',
-                'kcButtonPrimaryClass',
-                'kcButtonBlockClass',
-                'kcButtonLargeClass',
-              )
-            "
+            :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
             type="submit"
             :value="i18n.msgStr('doSubmit')"
           />

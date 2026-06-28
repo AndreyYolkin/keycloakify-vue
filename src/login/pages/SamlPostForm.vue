@@ -1,18 +1,15 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { onMounted, useTemplateRef } from "vue";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { onMounted, useTemplateRef } from 'vue';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "saml-post-form.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'saml-post-form.ftl' }>, I18n>>();
 
 const kcContext = props.kcContext;
 const { samlPost } = kcContext;
 
-const formRef = useTemplateRef<HTMLFormElement>("formRef");
+const formRef = useTemplateRef<HTMLFormElement>('formRef');
 
 onMounted(() => {
   if (formRef.value === null) {
@@ -20,8 +17,8 @@ onMounted(() => {
   }
 
   // Storybook
-  if (samlPost.url === "#") {
-    alert("In a real Keycloak the user would be redirected immediately");
+  if (samlPost.url === '#') {
+    alert('In a real Keycloak the user would be redirected immediately');
     return;
   }
 
@@ -68,7 +65,10 @@ onMounted(() => {
       />
       <noscript>
         <p><component :is="props.i18n.msg('saml.post-form.js-disabled')" /></p>
-        <input type="submit" :value="props.i18n.msgStr('doContinue')" />
+        <input
+          type="submit"
+          :value="props.i18n.msgStr('doContinue')"
+        />
       </noscript>
     </form>
   </component>

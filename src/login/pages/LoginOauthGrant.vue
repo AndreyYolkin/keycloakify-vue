@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "login-oauth-grant.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-oauth-grant.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -38,11 +35,17 @@ const { url, oauth, client } = kcContext;
           v-if="client.name"
           :is="i18n.msg('oauthGrantTitle', i18n.advancedMsgStr(client.name))"
         />
-        <component v-else :is="i18n.msg('oauthGrantTitle', client.clientId)" />
+        <component
+          v-else
+          :is="i18n.msg('oauthGrantTitle', client.clientId)"
+        />
       </p>
     </template>
 
-    <div id="kc-oauth" class="content-area">
+    <div
+      id="kc-oauth"
+      class="content-area"
+    >
       <h3><component :is="i18n.msg('oauthGrantRequest')" /></h3>
       <ul>
         <li
@@ -61,9 +64,7 @@ const { url, oauth, client } = kcContext;
       <h3 v-if="client.attributes.policyUri || client.attributes.tosUri">
         <component
           v-if="client.name"
-          :is="
-            i18n.msg('oauthGrantInformation', i18n.advancedMsgStr(client.name))
-          "
+          :is="i18n.msg('oauthGrantInformation', i18n.advancedMsgStr(client.name))"
         />
         <component
           v-else
@@ -71,20 +72,34 @@ const { url, oauth, client } = kcContext;
         />
         <template v-if="client.attributes.tosUri">
           <component :is="i18n.msg('oauthGrantReview')" />
-          <a :href="client.attributes.tosUri" target="_blank">
+          <a
+            :href="client.attributes.tosUri"
+            target="_blank"
+          >
             <component :is="i18n.msg('oauthGrantTos')" />
           </a>
         </template>
         <template v-if="client.attributes.policyUri">
           <component :is="i18n.msg('oauthGrantReview')" />
-          <a :href="client.attributes.policyUri" target="_blank">
+          <a
+            :href="client.attributes.policyUri"
+            target="_blank"
+          >
             <component :is="i18n.msg('oauthGrantPolicy')" />
           </a>
         </template>
       </h3>
 
-      <form class="form-actions" :action="url.oauthAction" method="POST">
-        <input type="hidden" name="code" :value="oauth.code" />
+      <form
+        class="form-actions"
+        :action="url.oauthAction"
+        method="POST"
+      >
+        <input
+          type="hidden"
+          name="code"
+          :value="oauth.code"
+        />
         <div :class="kcClsx('kcFormGroupClass')">
           <div id="kc-form-options">
             <div :class="kcClsx('kcFormOptionsWrapperClass')"></div>
@@ -93,26 +108,14 @@ const { url, oauth, client } = kcContext;
           <div id="kc-form-buttons">
             <div :class="kcClsx('kcFormButtonsWrapperClass')">
               <input
-                :class="
-                  kcClsx(
-                    'kcButtonClass',
-                    'kcButtonPrimaryClass',
-                    'kcButtonLargeClass',
-                  )
-                "
+                :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
                 name="accept"
                 id="kc-login"
                 type="submit"
                 :value="i18n.msgStr('doYes')"
               />
               <input
-                :class="
-                  kcClsx(
-                    'kcButtonClass',
-                    'kcButtonDefaultClass',
-                    'kcButtonLargeClass',
-                  )
-                "
+                :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
                 name="cancel"
                 id="kc-cancel"
                 type="submit"

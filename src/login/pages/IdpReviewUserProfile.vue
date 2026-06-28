@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import { ref, type Component } from "vue";
-import type { UserProfileFormFieldsProps } from "../components/UserProfileFormFieldsProps";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import { ref, type Component } from 'vue';
+import type { UserProfileFormFieldsProps } from '../components/UserProfileFormFieldsProps';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
 const props = defineProps<
-  PageProps<
-    Extract<KcContext, { pageId: "idp-review-user-profile.ftl" }>,
-    I18n
-  > & {
+  PageProps<Extract<KcContext, { pageId: 'idp-review-user-profile.ftl' }>, I18n> & {
     UserProfileFormFields: Component<UserProfileFormFieldsProps>;
     doMakeUserConfirmPassword: boolean;
   }
@@ -52,27 +49,24 @@ const isFormSubmittable = ref(false);
         :kcContext="kcContext"
         :i18n="props.i18n"
         :kcClsx="kcClsx"
-        :onIsFormSubmittableValueChange="
-          (value: boolean) => (isFormSubmittable = value)
-        "
+        :onIsFormSubmittableValueChange="(value: boolean) => (isFormSubmittable = value)"
         :doMakeUserConfirmPassword="doMakeUserConfirmPassword"
       />
 
       <div :class="kcClsx('kcFormGroupClass')">
-        <div id="kc-form-options" :class="kcClsx('kcFormOptionsClass')">
+        <div
+          id="kc-form-options"
+          :class="kcClsx('kcFormOptionsClass')"
+        >
           <div :class="kcClsx('kcFormOptionsWrapperClass')" />
         </div>
-        <div id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <div
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <input
             :disabled="!isFormSubmittable"
-            :class="
-              kcClsx(
-                'kcButtonClass',
-                'kcButtonPrimaryClass',
-                'kcButtonBlockClass',
-                'kcButtonLargeClass',
-              )
-            "
+            :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
             type="submit"
             :value="props.i18n.msgStr('doSubmit')"
           />

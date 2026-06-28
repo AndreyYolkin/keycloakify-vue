@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import { ref, type Component } from "vue";
-import type { UserProfileFormFieldsProps } from "../components/UserProfileFormFieldsProps";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import { ref, type Component } from 'vue';
+import type { UserProfileFormFieldsProps } from '../components/UserProfileFormFieldsProps';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
 const props = defineProps<
-  PageProps<
-    Extract<KcContext, { pageId: "login-update-profile.ftl" }>,
-    I18n
-  > & {
+  PageProps<Extract<KcContext, { pageId: 'login-update-profile.ftl' }>, I18n> & {
     UserProfileFormFields: Component<UserProfileFormFieldsProps>;
     doMakeUserConfirmPassword: boolean;
   }
@@ -52,17 +49,21 @@ const isFormSubmittable = ref(false);
         :kcContext="kcContext"
         :i18n="props.i18n"
         :kcClsx="kcClsx"
-        :onIsFormSubmittableValueChange="
-          (value: boolean) => (isFormSubmittable = value)
-        "
+        :onIsFormSubmittableValueChange="(value: boolean) => (isFormSubmittable = value)"
         :doMakeUserConfirmPassword="doMakeUserConfirmPassword"
       />
 
       <div :class="kcClsx('kcFormGroupClass')">
-        <div id="kc-form-options" :class="kcClsx('kcFormOptionsClass')">
+        <div
+          id="kc-form-options"
+          :class="kcClsx('kcFormOptionsClass')"
+        >
           <div :class="kcClsx('kcFormOptionsWrapperClass')" />
         </div>
-        <div id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <div
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <input
             :disabled="!isFormSubmittable"
             :class="
@@ -78,13 +79,7 @@ const isFormSubmittable = ref(false);
           />
           <button
             v-if="isAppInitiatedAction"
-            :class="
-              kcClsx(
-                'kcButtonClass',
-                'kcButtonDefaultClass',
-                'kcButtonLargeClass',
-              )
-            "
+            :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
             type="submit"
             name="cancel-aia"
             value="true"

@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import KcPageStory from "../KcPageStory.vue";
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import KcPageStory from '../KcPageStory.vue';
 
 const meta = {
-    title: "login/webauthn-error.ftl",
-    component: KcPageStory,
-    args: { pageId: "webauthn-error.ftl" }
+  title: 'login/webauthn-error.ftl',
+  component: KcPageStory,
+  args: { pageId: 'webauthn-error.ftl' },
 } satisfies Meta<typeof KcPageStory>;
 
 export default meta;
@@ -20,18 +20,18 @@ export const Default: Story = {};
  * - Key Aspect: Ensures the retry button functionality is visible and the user can retry authentication.
  */
 export const WithRetryAvailable: Story = {
-    args: {
-        kcContext: {
-            url: {
-                loginAction: "/mock-login-action"
-            },
-            isAppInitiatedAction: false,
-            message: {
-                summary: "WebAuthn authentication failed. Please try again.",
-                type: "error"
-            }
-        }
-    }
+  args: {
+    kcContext: {
+      url: {
+        loginAction: '/mock-login-action',
+      },
+      isAppInitiatedAction: false,
+      message: {
+        summary: 'WebAuthn authentication failed. Please try again.',
+        type: 'error',
+      },
+    },
+  },
 };
 
 /**
@@ -41,18 +41,18 @@ export const WithRetryAvailable: Story = {
  * - Key Aspect: Ensures the form renders correctly with both "Try Again" and "Cancel" options.
  */
 export const WithAppInitiatedAction: Story = {
-    args: {
-        kcContext: {
-            url: {
-                loginAction: "/mock-login-action"
-            },
-            isAppInitiatedAction: true,
-            message: {
-                summary: "WebAuthn authentication failed. You can try again or cancel.",
-                type: "error"
-            }
-        }
-    }
+  args: {
+    kcContext: {
+      url: {
+        loginAction: '/mock-login-action',
+      },
+      isAppInitiatedAction: true,
+      message: {
+        summary: 'WebAuthn authentication failed. You can try again or cancel.',
+        type: 'error',
+      },
+    },
+  },
 };
 
 /**
@@ -62,16 +62,16 @@ export const WithAppInitiatedAction: Story = {
  * - Key Aspect: Ensures the retry mechanism works properly when JavaScript is disabled or unavailable.
  */
 export const WithJavaScriptDisabled: Story = {
-    args: {
-        kcContext: {
-            url: {
-                loginAction: "/mock-login-action"
-            },
-            isAppInitiatedAction: false,
-            message: {
-                summary: "JavaScript is disabled or not working. Please retry manually.",
-                type: "warning"
-            }
-        }
-    }
+  args: {
+    kcContext: {
+      url: {
+        loginAction: '/mock-login-action',
+      },
+      isAppInitiatedAction: false,
+      message: {
+        summary: 'JavaScript is disabled or not working. Please retry manually.',
+        type: 'warning',
+      },
+    },
+  },
 };

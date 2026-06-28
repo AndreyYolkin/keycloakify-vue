@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<PageProps<Extract<KcContext, { pageId: "code.ftl" }>, I18n>>();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'code.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -26,8 +25,14 @@ const { code } = kcContext;
     :classes="classes"
   >
     <template #header>
-      <component v-if="code.success" :is="props.i18n.msg('codeSuccessTitle')" />
-      <component v-else :is="props.i18n.msg('codeErrorTitle', code.error)" />
+      <component
+        v-if="code.success"
+        :is="props.i18n.msg('codeSuccessTitle')"
+      />
+      <component
+        v-else
+        :is="props.i18n.msg('codeErrorTitle', code.error)"
+      />
     </template>
 
     <div id="kc-code">
@@ -39,7 +44,11 @@ const { code } = kcContext;
           :value="code.code"
         />
       </template>
-      <p v-else-if="code.error" id="error" v-html="kcSanitize(code.error)" />
+      <p
+        v-else-if="code.error"
+        id="error"
+        v-html="kcSanitize(code.error)"
+      />
     </div>
   </component>
 </template>

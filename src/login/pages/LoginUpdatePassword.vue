@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import LogoutOtherSessions from "../components/LogoutOtherSessions.vue";
-import PasswordWrapper from "../components/PasswordWrapper.vue";
-import type { PageProps } from "./PageProps";
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import LogoutOtherSessions from '../components/LogoutOtherSessions.vue';
+import PasswordWrapper from '../components/PasswordWrapper.vue';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-update-password.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -28,9 +25,7 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
     :i18n="i18n"
     :doUseDefaultCss="doUseDefaultCss"
     :classes="classes"
-    :displayMessage="
-      !messagesPerField.existsError('password', 'password-confirm')
-    "
+    :displayMessage="!messagesPerField.existsError('password', 'password-confirm')"
   >
     <template #header>
       <component :is="i18n.msg('updatePasswordTitle')" />
@@ -44,7 +39,10 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
     >
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcLabelWrapperClass')">
-          <label for="password-new" :class="kcClsx('kcLabelClass')">
+          <label
+            for="password-new"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component :is="i18n.msg('passwordNew')" />
           </label>
         </div>
@@ -61,9 +59,7 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
               :class="kcClsx('kcInputClass')"
               autofocus
               autocomplete="new-password"
-              :aria-invalid="
-                messagesPerField.existsError('password', 'password-confirm')
-              "
+              :aria-invalid="messagesPerField.existsError('password', 'password-confirm')"
             />
           </PasswordWrapper>
 
@@ -79,7 +75,10 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
 
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcLabelWrapperClass')">
-          <label for="password-confirm" :class="kcClsx('kcLabelClass')">
+          <label
+            for="password-confirm"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component :is="i18n.msg('passwordConfirm')" />
           </label>
         </div>
@@ -95,9 +94,7 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
               name="password-confirm"
               :class="kcClsx('kcInputClass')"
               autocomplete="new-password"
-              :aria-invalid="
-                messagesPerField.existsError('password', 'password-confirm')
-              "
+              :aria-invalid="messagesPerField.existsError('password', 'password-confirm')"
             />
           </PasswordWrapper>
 
@@ -112,8 +109,14 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
       </div>
 
       <div :class="kcClsx('kcFormGroupClass')">
-        <LogoutOtherSessions :kcClsx="kcClsx" :i18n="i18n" />
-        <div id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <LogoutOtherSessions
+          :kcClsx="kcClsx"
+          :i18n="i18n"
+        />
+        <div
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <input
             :class="
               kcClsx(
@@ -128,13 +131,7 @@ const { url, messagesPerField, isAppInitiatedAction } = kcContext;
           />
           <button
             v-if="isAppInitiatedAction"
-            :class="
-              kcClsx(
-                'kcButtonClass',
-                'kcButtonDefaultClass',
-                'kcButtonLargeClass',
-              )
-            "
+            :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
             type="submit"
             name="cancel-aia"
             value="true"

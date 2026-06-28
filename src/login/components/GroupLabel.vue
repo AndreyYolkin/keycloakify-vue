@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Attribute } from "keycloakify/login/KcContext";
-import type { KcClsx } from "keycloakify/login/lib/kcClsx";
-import { computed } from "vue";
-import type { I18n } from "../i18n/i18n";
+import type { Attribute } from 'keycloakify/login/KcContext';
+import type { KcClsx } from 'keycloakify/login/lib/kcClsx';
+import { computed } from 'vue';
+import type { I18n } from '../i18n/i18n';
 
 const props = defineProps<{
   attribute: Attribute;
@@ -17,8 +17,8 @@ const isGroupLabel = (() => {
   if (props.attribute.group?.name !== props.groupNameRef.current) {
     // groupNameRef is a mutable ref-object (not a Vue prop value), mutation is intentional
     // eslint-disable-next-line vue/no-mutating-props
-    props.groupNameRef.current = props.attribute.group?.name ?? "";
-    if (props.groupNameRef.current !== "") {
+    props.groupNameRef.current = props.attribute.group?.name ?? '';
+    if (props.groupNameRef.current !== '') {
       return true;
     }
   }
@@ -27,18 +27,12 @@ const isGroupLabel = (() => {
 
 const html5DataAnnotations = computed(() =>
   Object.fromEntries(
-    Object.entries(props.attribute.group?.html5DataAnnotations ?? {}).map(
-      ([key, value]) => [`data-${key}`, value],
-    ),
+    Object.entries(props.attribute.group?.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]),
   ),
 );
 
-const groupDisplayHeader = computed(
-  () => props.attribute.group?.displayHeader ?? "",
-);
-const groupDisplayDescription = computed(
-  () => props.attribute.group?.displayDescription ?? "",
-);
+const groupDisplayHeader = computed(() => props.attribute.group?.displayHeader ?? '');
+const groupDisplayDescription = computed(() => props.attribute.group?.displayDescription ?? '');
 </script>
 
 <template>
@@ -56,7 +50,7 @@ const groupDisplayDescription = computed(
           v-if="groupDisplayHeader !== ''"
           :is="i18n.advancedMsg(groupDisplayHeader)"
         />
-        <template v-else>{{ attribute.group?.name ?? "" }}</template>
+        <template v-else>{{ attribute.group?.name ?? '' }}</template>
       </label>
     </div>
     <div

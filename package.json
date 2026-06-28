@@ -1,12 +1,21 @@
 {
   "name": "@keycloakify/vue",
   "description": "Vue Components for Keycloakify",
-  "keywords": ["keycloak", "vue", "keycloakify"],
+  "keywords": [
+    "keycloak",
+    "vue",
+    "keycloakify"
+  ],
   "homepage": "https://www.keycloakify.dev",
-  "repository": { "type": "git", "url": "git+https://github.com/AndreyYolkin/keycloakify-vue.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreyYolkin/keycloakify-vue.git"
+  },
   "license": "MIT",
   "sideEffects": false,
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.1.0",
   "type": "module",
   "files": [

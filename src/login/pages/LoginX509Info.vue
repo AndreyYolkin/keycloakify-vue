@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "login-x509-info.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-x509-info.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -38,7 +35,10 @@ const { url, x509 } = kcContext;
     >
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcLabelWrapperClass')">
-          <label for="certificate_subjectDN" :class="kcClsx('kcLabelClass')">
+          <label
+            for="certificate_subjectDN"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component :is="props.i18n.msg('clientCertificate')" />
           </label>
         </div>
@@ -46,12 +46,21 @@ const { url, x509 } = kcContext;
           v-if="x509.formData.subjectDN"
           :class="kcClsx('kcLabelWrapperClass')"
         >
-          <label id="certificate_subjectDN" :class="kcClsx('kcLabelClass')">
+          <label
+            id="certificate_subjectDN"
+            :class="kcClsx('kcLabelClass')"
+          >
             {{ x509.formData.subjectDN }}
           </label>
         </div>
-        <div v-else :class="kcClsx('kcLabelWrapperClass')">
-          <label id="certificate_subjectDN" :class="kcClsx('kcLabelClass')">
+        <div
+          v-else
+          :class="kcClsx('kcLabelWrapperClass')"
+        >
+          <label
+            id="certificate_subjectDN"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component :is="props.i18n.msg('noCertificate')" />
           </label>
         </div>
@@ -59,31 +68,37 @@ const { url, x509 } = kcContext;
       <div :class="kcClsx('kcFormGroupClass')">
         <template v-if="x509.formData.isUserEnabled">
           <div :class="kcClsx('kcLabelWrapperClass')">
-            <label for="username" :class="kcClsx('kcLabelClass')">
+            <label
+              for="username"
+              :class="kcClsx('kcLabelClass')"
+            >
               <component :is="props.i18n.msg('doX509Login')" />
             </label>
           </div>
           <div :class="kcClsx('kcLabelWrapperClass')">
-            <label id="username" :class="kcClsx('kcLabelClass')">
+            <label
+              id="username"
+              :class="kcClsx('kcLabelClass')"
+            >
               {{ x509.formData.username }}
             </label>
           </div>
         </template>
       </div>
       <div :class="kcClsx('kcFormGroupClass')">
-        <div id="kc-form-options" :class="kcClsx('kcFormOptionsClass')">
+        <div
+          id="kc-form-options"
+          :class="kcClsx('kcFormOptionsClass')"
+        >
           <div :class="kcClsx('kcFormOptionsWrapperClass')" />
         </div>
-        <div id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <div
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <div :class="kcClsx('kcFormButtonsWrapperClass')">
             <input
-              :class="
-                kcClsx(
-                  'kcButtonClass',
-                  'kcButtonPrimaryClass',
-                  'kcButtonLargeClass',
-                )
-              "
+              :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
               name="login"
               id="kc-login"
               type="submit"
@@ -91,13 +106,7 @@ const { url, x509 } = kcContext;
             />
             <input
               v-if="x509.formData.isUserEnabled"
-              :class="
-                kcClsx(
-                  'kcButtonClass',
-                  'kcButtonDefaultClass',
-                  'kcButtonLargeClass',
-                )
-              "
+              :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
               name="cancel"
               id="kc-cancel"
               type="submit"

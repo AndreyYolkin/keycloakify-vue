@@ -4,7 +4,7 @@ import * as os from 'os';
 import { join as pathJoin, relative as pathRelative } from 'path';
 import { getThisCodebaseRootDirPath } from './tools/getThisCodebaseRootDirPath';
 
-const singletonDependencies: string[] = ["keycloakify", "typescript", "@vitejs/plugin-vue", "vue"];
+const singletonDependencies: string[] = ['keycloakify', 'typescript', '@vitejs/plugin-vue', 'vue'];
 
 // For example [ "@emotion" ] it's more convenient than
 // having to list every sub emotion packages (@emotion/css @emotion/utils ...)

@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import { clsx } from "keycloakify/tools/clsx";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { computed, ref, toRef } from "vue";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
-import { useScript } from "./LoginUsername.useScript";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import { clsx } from 'keycloakify/tools/clsx';
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import { computed, ref, toRef } from 'vue';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
+import { useScript } from './LoginUsername.useScript';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "login-username.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-username.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -34,11 +31,7 @@ const {
 const isLoginButtonDisabled = ref(false);
 
 const usernameLabelKey = computed(() =>
-  !realm.loginWithEmailAllowed
-    ? "username"
-    : !realm.registrationEmailAsUsername
-      ? "usernameOrEmail"
-      : "email",
+  !realm.loginWithEmailAllowed ? 'username' : !realm.registrationEmailAsUsername ? 'usernameOrEmail' : 'email',
 );
 
 function onSubmit() {
@@ -46,12 +39,12 @@ function onSubmit() {
   return true;
 }
 
-const webAuthnButtonId = "authenticateWebAuthnButton";
+const webAuthnButtonId = 'authenticateWebAuthnButton';
 
 useScript({
   webAuthnButtonId,
   kcContext,
-  i18n: toRef(props, "i18n"),
+  i18n: toRef(props, 'i18n'),
 });
 </script>
 
@@ -63,9 +56,7 @@ useScript({
     :doUseDefaultCss="doUseDefaultCss"
     :classes="classes"
     :displayMessage="!messagesPerField.existsError('username')"
-    :displayInfo="
-      realm.password && realm.registrationAllowed && !registrationDisabled
-    "
+    :displayInfo="realm.password && realm.registrationAllowed && !registrationDisabled"
   >
     <template #header>
       <component :is="i18n.msg('doLogIn')" />
@@ -75,7 +66,10 @@ useScript({
       <div id="kc-registration">
         <span>
           <component :is="i18n.msg('noAccount')" />
-          <a :tabindex="6" :href="url.registrationUrl">
+          <a
+            :tabindex="6"
+            :href="url.registrationUrl"
+          >
             <component :is="i18n.msg('doRegister')" />
           </a>
         </span>
@@ -92,13 +86,13 @@ useScript({
         <h2><component :is="i18n.msg('identity-provider-login-label')" /></h2>
         <ul
           :class="
-            kcClsx(
-              'kcFormSocialAccountListClass',
-              social.providers.length > 3 && 'kcFormSocialAccountListGridClass',
-            )
+            kcClsx('kcFormSocialAccountListClass', social.providers.length > 3 && 'kcFormSocialAccountListGridClass')
           "
         >
-          <li v-for="p in social.providers" :key="p.providerId">
+          <li
+            v-for="p in social.providers"
+            :key="p.providerId"
+          >
             <a
               :id="`social-${p.alias}`"
               :class="
@@ -116,12 +110,7 @@ useScript({
                 aria-hidden="true"
               ></i>
               <span
-                :class="
-                  clsx(
-                    kcClsx('kcFormSocialAccountNameClass'),
-                    p.iconClasses && 'kc-social-icon-text',
-                  )
-                "
+                :class="clsx(kcClsx('kcFormSocialAccountNameClass'), p.iconClasses && 'kc-social-icon-text')"
                 v-html="kcSanitize(p.displayName)"
               ></span>
             </a>
@@ -139,8 +128,14 @@ useScript({
           method="post"
           @submit="onSubmit"
         >
-          <div v-if="!usernameHidden" :class="kcClsx('kcFormGroupClass')">
-            <label for="username" :class="kcClsx('kcLabelClass')">
+          <div
+            v-if="!usernameHidden"
+            :class="kcClsx('kcFormGroupClass')"
+          >
+            <label
+              for="username"
+              :class="kcClsx('kcLabelClass')"
+            >
               <component :is="i18n.msg(usernameLabelKey)" />
             </label>
             <input
@@ -151,9 +146,7 @@ useScript({
               :value="login.username ?? ''"
               type="text"
               autofocus
-              :autocomplete="
-                enableWebAuthnConditionalUI ? 'username webauthn' : 'username'
-              "
+              :autocomplete="enableWebAuthnConditionalUI ? 'username webauthn' : 'username'"
               :aria-invalid="messagesPerField.existsError('username')"
             />
             <span
@@ -167,7 +160,10 @@ useScript({
 
           <div :class="kcClsx('kcFormGroupClass', 'kcFormSettingClass')">
             <div id="kc-form-options">
-              <div v-if="realm.rememberMe && !usernameHidden" class="checkbox">
+              <div
+                v-if="realm.rememberMe && !usernameHidden"
+                class="checkbox"
+              >
                 <label>
                   <input
                     :tabindex="3"
@@ -182,18 +178,14 @@ useScript({
             </div>
           </div>
 
-          <div id="kc-form-buttons" :class="kcClsx('kcFormGroupClass')">
+          <div
+            id="kc-form-buttons"
+            :class="kcClsx('kcFormGroupClass')"
+          >
             <input
               :tabindex="4"
               :disabled="isLoginButtonDisabled"
-              :class="
-                kcClsx(
-                  'kcButtonClass',
-                  'kcButtonPrimaryClass',
-                  'kcButtonBlockClass',
-                  'kcButtonLargeClass',
-                )
-              "
+              :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
               name="login"
               id="kc-login"
               type="submit"
@@ -205,22 +197,48 @@ useScript({
     </div>
 
     <template v-if="enableWebAuthnConditionalUI">
-      <form id="webauth" :action="url.loginAction" method="post">
-        <input type="hidden" id="clientDataJSON" name="clientDataJSON" />
-        <input type="hidden" id="authenticatorData" name="authenticatorData" />
-        <input type="hidden" id="signature" name="signature" />
-        <input type="hidden" id="credentialId" name="credentialId" />
-        <input type="hidden" id="userHandle" name="userHandle" />
-        <input type="hidden" id="error" name="error" />
+      <form
+        id="webauth"
+        :action="url.loginAction"
+        method="post"
+      >
+        <input
+          type="hidden"
+          id="clientDataJSON"
+          name="clientDataJSON"
+        />
+        <input
+          type="hidden"
+          id="authenticatorData"
+          name="authenticatorData"
+        />
+        <input
+          type="hidden"
+          id="signature"
+          name="signature"
+        />
+        <input
+          type="hidden"
+          id="credentialId"
+          name="credentialId"
+        />
+        <input
+          type="hidden"
+          id="userHandle"
+          name="userHandle"
+        />
+        <input
+          type="hidden"
+          id="error"
+          name="error"
+        />
       </form>
 
-      <template
-        v-if="
-          authenticators !== undefined &&
-          authenticators.authenticators.length !== 0
-        "
-      >
-        <form id="authn_select" :class="kcClsx('kcFormClass')">
+      <template v-if="authenticators !== undefined && authenticators.authenticators.length !== 0">
+        <form
+          id="authn_select"
+          :class="kcClsx('kcFormClass')"
+        >
           <input
             v-for="(authenticator, i) in authenticators.authenticators"
             :key="i"
@@ -237,14 +255,7 @@ useScript({
       <input
         :id="webAuthnButtonId"
         type="button"
-        :class="
-          kcClsx(
-            'kcButtonClass',
-            'kcButtonDefaultClass',
-            'kcButtonBlockClass',
-            'kcButtonLargeClass',
-          )
-        "
+        :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
         :value="i18n.msgStr('passkey-doAuthenticate')"
       />
     </template>

@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import { clsx } from "keycloakify/tools/clsx";
-import {
-  onMounted,
-  onUnmounted,
-  ref,
-  useTemplateRef,
-  type Component,
-} from "vue";
-import TermsAcceptance from "../components/TermsAcceptance.vue";
-import type { UserProfileFormFieldsProps } from "../components/UserProfileFormFieldsProps";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import { clsx } from 'keycloakify/tools/clsx';
+import { onMounted, onUnmounted, ref, useTemplateRef, type Component } from 'vue';
+import TermsAcceptance from '../components/TermsAcceptance.vue';
+import type { UserProfileFormFieldsProps } from '../components/UserProfileFormFieldsProps';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
 const props = defineProps<
-  PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
+  PageProps<Extract<KcContext, { pageId: 'register.ftl' }>, I18n> & {
     UserProfileFormFields: Component<UserProfileFormFieldsProps>;
     doMakeUserConfirmPassword: boolean;
   }
@@ -41,16 +35,16 @@ const {
 const isFormSubmittable = ref(false);
 const areTermsAccepted = ref(false);
 
-const formRef = useTemplateRef<HTMLFormElement>("formRef");
+const formRef = useTemplateRef<HTMLFormElement>('formRef');
 
 onMounted(() => {
-  (window as any)["onSubmitRecaptcha"] = () => {
+  (window as any)['onSubmitRecaptcha'] = () => {
     formRef.value?.requestSubmit();
   };
 });
 
 onUnmounted(() => {
-  delete (window as any)["onSubmitRecaptcha"];
+  delete (window as any)['onSubmitRecaptcha'];
 });
 </script>
 
@@ -69,7 +63,10 @@ onUnmounted(() => {
         v-if="messageHeader !== undefined"
         :is="props.i18n.advancedMsg(messageHeader)"
       />
-      <component v-else :is="props.i18n.msg('registerTitle')" />
+      <component
+        v-else
+        :is="props.i18n.msg('registerTitle')"
+      />
     </template>
 
     <form
@@ -84,9 +81,7 @@ onUnmounted(() => {
         :kcContext="kcContext"
         :i18n="props.i18n"
         :kcClsx="kcClsx"
-        :onIsFormSubmittableValueChange="
-          (value: boolean) => (isFormSubmittable = value)
-        "
+        :onIsFormSubmittableValueChange="(value: boolean) => (isFormSubmittable = value)"
         :doMakeUserConfirmPassword="doMakeUserConfirmPassword"
       />
 
@@ -96,16 +91,11 @@ onUnmounted(() => {
         :kcClsx="kcClsx"
         :messagesPerField="messagesPerField"
         :areTermsAccepted="areTermsAccepted"
-        :onAreTermsAcceptedValueChange="
-          (value: boolean) => (areTermsAccepted = value)
-        "
+        :onAreTermsAcceptedValueChange="(value: boolean) => (areTermsAccepted = value)"
       />
 
       <div
-        v-if="
-          recaptchaRequired &&
-          (recaptchaVisible || recaptchaAction === undefined)
-        "
+        v-if="recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined)"
         class="form-group"
       >
         <div :class="kcClsx('kcInputWrapperClass')">
@@ -119,33 +109,26 @@ onUnmounted(() => {
       </div>
 
       <div :class="kcClsx('kcFormGroupClass')">
-        <div id="kc-form-options" :class="kcClsx('kcFormOptionsClass')">
+        <div
+          id="kc-form-options"
+          :class="kcClsx('kcFormOptionsClass')"
+        >
           <div :class="kcClsx('kcFormOptionsWrapperClass')">
             <span
-              ><a :href="url.loginUrl"
-                ><component :is="props.i18n.msg('backToLogin')" /></a
+              ><a :href="url.loginUrl"><component :is="props.i18n.msg('backToLogin')" /></a
             ></span>
           </div>
         </div>
 
         <div
-          v-if="
-            recaptchaRequired &&
-            !recaptchaVisible &&
-            recaptchaAction !== undefined
-          "
+          v-if="recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined"
           id="kc-form-buttons"
           :class="kcClsx('kcFormButtonsClass')"
         >
           <button
             :class="
               clsx(
-                kcClsx(
-                  'kcButtonClass',
-                  'kcButtonPrimaryClass',
-                  'kcButtonBlockClass',
-                  'kcButtonLargeClass',
-                ),
+                kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass'),
                 'g-recaptcha',
               )
             "
@@ -157,20 +140,14 @@ onUnmounted(() => {
             <component :is="props.i18n.msg('doRegister')" />
           </button>
         </div>
-        <div v-else id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <div
+          v-else
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <input
-            :disabled="
-              !isFormSubmittable ||
-              (termsAcceptanceRequired && !areTermsAccepted)
-            "
-            :class="
-              kcClsx(
-                'kcButtonClass',
-                'kcButtonPrimaryClass',
-                'kcButtonBlockClass',
-                'kcButtonLargeClass',
-              )
-            "
+            :disabled="!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)"
+            :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
             type="submit"
             :value="props.i18n.msgStr('doRegister')"
           />

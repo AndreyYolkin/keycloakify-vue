@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { ref, watch } from "vue";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { ref, watch } from 'vue';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "frontchannel-logout.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'frontchannel-logout.ftl' }>, I18n>>();
 
 const kcContext = props.kcContext;
 const { logout } = kcContext;
@@ -46,7 +43,10 @@ function onIframeLoad() {
 
     <p><component :is="props.i18n.msg('frontchannel-logout.message')" /></p>
     <ul>
-      <li v-for="client in logout.clients" :key="client.name">
+      <li
+        v-for="client in logout.clients"
+        :key="client.name"
+      >
         {{ client.name }}
         <iframe
           :src="client.frontChannelLogoutUrl"

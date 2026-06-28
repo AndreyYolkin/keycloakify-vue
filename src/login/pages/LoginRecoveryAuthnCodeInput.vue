@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<
-      Extract<KcContext, { pageId: "login-recovery-authn-code-input.ftl" }>,
-      I18n
-    >
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-recovery-authn-code-input.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -43,15 +37,11 @@ const { url, messagesPerField, recoveryAuthnCodesInputBean } = kcContext;
     >
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcLabelWrapperClass')">
-          <label for="recoveryCodeInput" :class="kcClsx('kcLabelClass')">
-            <component
-              :is="
-                i18n.msg(
-                  'auth-recovery-code-prompt',
-                  `${recoveryAuthnCodesInputBean.codeNumber}`,
-                )
-              "
-            />
+          <label
+            for="recoveryCodeInput"
+            :class="kcClsx('kcLabelClass')"
+          >
+            <component :is="i18n.msg('auth-recovery-code-prompt', `${recoveryAuthnCodesInputBean.codeNumber}`)" />
           </label>
         </div>
         <div :class="kcClsx('kcInputWrapperClass')">
@@ -76,19 +66,18 @@ const { url, messagesPerField, recoveryAuthnCodesInputBean } = kcContext;
       </div>
 
       <div :class="kcClsx('kcFormGroupClass')">
-        <div id="kc-form-options" :class="kcClsx('kcFormOptionsWrapperClass')">
+        <div
+          id="kc-form-options"
+          :class="kcClsx('kcFormOptionsWrapperClass')"
+        >
           <div :class="kcClsx('kcFormOptionsWrapperClass')"></div>
         </div>
-        <div id="kc-form-buttons" :class="kcClsx('kcFormButtonsClass')">
+        <div
+          id="kc-form-buttons"
+          :class="kcClsx('kcFormButtonsClass')"
+        >
           <input
-            :class="
-              kcClsx(
-                'kcButtonClass',
-                'kcButtonPrimaryClass',
-                'kcButtonBlockClass',
-                'kcButtonLargeClass',
-              )
-            "
+            :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
             name="login"
             id="kc-login"
             type="submit"

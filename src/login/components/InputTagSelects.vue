@@ -1,38 +1,35 @@
 <script setup lang="ts">
-import { assert } from "keycloakify/tools/assert";
-import { computed } from "vue";
-import { inputLabel } from "./inputLabel";
-import type { InputFieldByTypeProps } from "./InputFieldByTypeProps";
+import { assert } from 'keycloakify/tools/assert';
+import { computed } from 'vue';
+import { inputLabel } from './inputLabel';
+import type { InputFieldByTypeProps } from './InputFieldByTypeProps';
 
 const props = defineProps<InputFieldByTypeProps>();
 
 const styling = computed(() => {
   const { inputType } = props.attribute.annotations;
-  assert(
-    inputType === "select-radiobuttons" ||
-      inputType === "multiselect-checkboxes",
-  );
+  assert(inputType === 'select-radiobuttons' || inputType === 'multiselect-checkboxes');
   switch (inputType) {
-    case "select-radiobuttons":
+    case 'select-radiobuttons':
       return {
-        inputType: "radio",
-        classDiv: props.kcClsx("kcInputClassRadio"),
-        classInput: props.kcClsx("kcInputClassRadioInput"),
-        classLabel: props.kcClsx("kcInputClassRadioLabel"),
+        inputType: 'radio',
+        classDiv: props.kcClsx('kcInputClassRadio'),
+        classInput: props.kcClsx('kcInputClassRadioInput'),
+        classLabel: props.kcClsx('kcInputClassRadioLabel'),
       };
-    case "multiselect-checkboxes":
+    case 'multiselect-checkboxes':
       return {
-        inputType: "checkbox",
-        classDiv: props.kcClsx("kcInputClassCheckbox"),
-        classInput: props.kcClsx("kcInputClassCheckboxInput"),
-        classLabel: props.kcClsx("kcInputClassCheckboxLabel"),
+        inputType: 'checkbox',
+        classDiv: props.kcClsx('kcInputClassCheckbox'),
+        classInput: props.kcClsx('kcInputClassCheckboxInput'),
+        classLabel: props.kcClsx('kcInputClassCheckboxLabel'),
       };
     default:
       return {
-        inputType: "radio",
-        classDiv: props.kcClsx("kcInputClassRadio"),
-        classInput: props.kcClsx("kcInputClassRadioInput"),
-        classLabel: props.kcClsx("kcInputClassRadioLabel"),
+        inputType: 'radio',
+        classDiv: props.kcClsx('kcInputClassRadio'),
+        classInput: props.kcClsx('kcInputClassRadioInput'),
+        classLabel: props.kcClsx('kcInputClassRadioLabel'),
       };
   }
 });
@@ -40,9 +37,9 @@ const styling = computed(() => {
 const options = computed<string[]>(() => {
   const { inputOptionsFromValidation } = props.attribute.annotations;
   if (inputOptionsFromValidation !== undefined) {
-    const validator = (
-      props.attribute.validators as Record<string, { options?: string[] }>
-    )[inputOptionsFromValidation];
+    const validator = (props.attribute.validators as Record<string, { options?: string[] }>)[
+      inputOptionsFromValidation
+    ];
     if (validator?.options !== undefined) {
       return validator.options;
     }
@@ -51,15 +48,13 @@ const options = computed<string[]>(() => {
 });
 
 function isChecked(option: string) {
-  return props.valueOrValues instanceof Array
-    ? props.valueOrValues.includes(option)
-    : props.valueOrValues === option;
+  return props.valueOrValues instanceof Array ? props.valueOrValues.includes(option) : props.valueOrValues === option;
 }
 
 function onChange(event: Event, option: string) {
   const target = event.target as HTMLInputElement;
   props.dispatchFormAction({
-    action: "update",
+    action: 'update',
     name: props.attribute.name,
     valueOrValues: (() => {
       if (props.valueOrValues instanceof Array) {
@@ -71,14 +66,14 @@ function onChange(event: Event, option: string) {
         }
         return newValues;
       }
-      return target.checked ? option : "";
+      return target.checked ? option : '';
     })(),
   });
 }
 
 function onBlur() {
   props.dispatchFormAction({
-    action: "focus lost",
+    action: 'focus lost',
     name: props.attribute.name,
     fieldIndex: undefined,
   });
@@ -86,7 +81,11 @@ function onBlur() {
 </script>
 
 <template>
-  <div v-for="option in options" :key="option" :class="styling.classDiv">
+  <div
+    v-for="option in options"
+    :key="option"
+    :class="styling.classDiv"
+  >
     <input
       :type="styling.inputType"
       :id="`${attribute.name}-${option}`"

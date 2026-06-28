@@ -51,7 +51,6 @@ export async function getPrettier(): Promise<PrettierAndConfigHash> {
     if (isCJS) {
       eval(`${symToStr({ prettier })} = require("${prettierDirPath}")`);
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       prettier = await new Promise((_resolve) => {
         eval(
           `import("file:///${pathJoin(prettierDirPath, 'index.mjs').replace(/\\/g, '/')}").then(prettier => _resolve(prettier))`,

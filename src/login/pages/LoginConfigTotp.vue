@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import LogoutOtherSessions from "../components/LogoutOtherSessions.vue";
-import type { PageProps } from "./PageProps";
+import { kcSanitize } from 'keycloakify/lib/kcSanitize';
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import LogoutOtherSessions from '../components/LogoutOtherSessions.vue';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-config-totp.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -38,7 +35,10 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
         <p><component :is="i18n.msg('loginTotpStep1')" /></p>
 
         <ul id="kc-totp-supported-apps">
-          <li v-for="app in totp.supportedApplications" :key="app">
+          <li
+            v-for="app in totp.supportedApplications"
+            :key="app"
+          >
             <component :is="i18n.advancedMsg(app)" />
           </li>
         </ul>
@@ -51,7 +51,10 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
             <span id="kc-totp-secret-key">{{ totp.totpSecretEncoded }}</span>
           </p>
           <p>
-            <a :href="totp.qrUrl" id="mode-barcode">
+            <a
+              :href="totp.qrUrl"
+              id="mode-barcode"
+            >
               <component :is="i18n.msg('loginTotpScanBarcode')" />
             </a>
           </p>
@@ -71,11 +74,17 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
               <component :is="i18n.msg('loginTotpDigits')" />:
               {{ totp.policy.digits }}
             </li>
-            <li v-if="totp.policy.type === 'totp'" id="kc-totp-period">
+            <li
+              v-if="totp.policy.type === 'totp'"
+              id="kc-totp-period"
+            >
               <component :is="i18n.msg('loginTotpInterval')" />:
               {{ totp.policy.period }}
             </li>
-            <li v-else id="kc-totp-counter">
+            <li
+              v-else
+              id="kc-totp-counter"
+            >
               <component :is="i18n.msg('loginTotpCounter')" />:
               {{ totp.policy.initialCounter }}
             </li>
@@ -92,7 +101,10 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
         />
         <br />
         <p>
-          <a :href="totp.manualUrl" id="mode-manual">
+          <a
+            :href="totp.manualUrl"
+            id="mode-manual"
+          >
             <component :is="i18n.msg('loginTotpUnableToScan')" />
           </a>
         </p>
@@ -112,7 +124,10 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
     >
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcInputWrapperClass')">
-          <label for="totp" :class="kcClsx('kcLabelClass')">
+          <label
+            for="totp"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component :is="i18n.msg('authenticatorCode')" /> </label
           >&nbsp;
           <span class="required">*</span>
@@ -141,15 +156,27 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
           name="totpSecret"
           :value="totp.totpSecret"
         />
-        <input v-if="mode" type="hidden" id="mode" :value="mode" />
+        <input
+          v-if="mode"
+          type="hidden"
+          id="mode"
+          :value="mode"
+        />
       </div>
 
       <div :class="kcClsx('kcFormGroupClass')">
         <div :class="kcClsx('kcInputWrapperClass')">
-          <label for="userLabel" :class="kcClsx('kcLabelClass')">
+          <label
+            for="userLabel"
+            :class="kcClsx('kcLabelClass')"
+          >
             <component :is="i18n.msg('loginTotpDeviceName')" /> </label
           >&nbsp;
-          <span v-if="totp.otpCredentials.length >= 1" class="required">*</span>
+          <span
+            v-if="totp.otpCredentials.length >= 1"
+            class="required"
+            >*</span
+          >
         </div>
         <div :class="kcClsx('kcInputWrapperClass')">
           <input
@@ -171,31 +198,22 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
       </div>
 
       <div :class="kcClsx('kcFormGroupClass')">
-        <LogoutOtherSessions :kcClsx="kcClsx" :i18n="i18n" />
+        <LogoutOtherSessions
+          :kcClsx="kcClsx"
+          :i18n="i18n"
+        />
       </div>
 
       <template v-if="isAppInitiatedAction">
         <input
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonPrimaryClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
           id="saveTOTPBtn"
           :value="i18n.msgStr('doSubmit')"
         />
         <button
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonDefaultClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
           id="cancelTOTPBtn"
           name="cancel-aia"
           value="true"
@@ -206,9 +224,7 @@ const { url, isAppInitiatedAction, totp, mode, messagesPerField } = kcContext;
       <input
         v-else
         type="submit"
-        :class="
-          kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')
-        "
+        :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
         id="saveTOTPBtn"
         :value="i18n.msgStr('doSubmit')"
       />

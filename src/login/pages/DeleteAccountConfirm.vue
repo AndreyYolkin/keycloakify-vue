@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<
-      Extract<KcContext, { pageId: "delete-account-confirm.ftl" }>,
-      I18n
-    >
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'delete-account-confirm.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -33,7 +27,11 @@ const { url, triggered_from_aia } = kcContext;
       <component :is="props.i18n.msg('deleteAccountConfirm')" />
     </template>
 
-    <form :action="url.loginAction" class="form-vertical" method="post">
+    <form
+      :action="url.loginAction"
+      class="form-vertical"
+      method="post"
+    >
       <div
         class="alert alert-warning"
         style="margin-top: 0; margin-bottom: 30px"
@@ -51,31 +49,19 @@ const { url, triggered_from_aia } = kcContext;
       </p>
       <div id="kc-form-buttons">
         <input
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonPrimaryClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
           type="submit"
           :value="props.i18n.msgStr('doConfirmDelete')"
         />
         <button
           v-if="triggered_from_aia"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonDefaultClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
           style="margin-left: calc(100% - 220px)"
           type="submit"
           name="cancel-aia"
           value="true"
         >
-          {{ props.i18n.msgStr("doCancel") }}
+          {{ props.i18n.msgStr('doCancel') }}
         </button>
       </div>
     </form>

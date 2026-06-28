@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "select-authenticator.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'select-authenticator.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -47,25 +44,14 @@ const { url, auth } = kcContext;
           :value="authenticationSelection.authExecId"
         >
           <div :class="kcClsx('kcSelectAuthListItemIconClass')">
-            <i
-              :class="
-                kcClsx(
-                  'kcSelectAuthListItemIconPropertyClass',
-                  authenticationSelection.iconCssClass,
-                )
-              "
-            ></i>
+            <i :class="kcClsx('kcSelectAuthListItemIconPropertyClass', authenticationSelection.iconCssClass)"></i>
           </div>
           <div :class="kcClsx('kcSelectAuthListItemBodyClass')">
             <div :class="kcClsx('kcSelectAuthListItemHeadingClass')">
-              <component
-                :is="i18n.advancedMsg(authenticationSelection.displayName)"
-              />
+              <component :is="i18n.advancedMsg(authenticationSelection.displayName)" />
             </div>
             <div :class="kcClsx('kcSelectAuthListItemDescriptionClass')">
-              <component
-                :is="i18n.advancedMsg(authenticationSelection.helpText)"
-              />
+              <component :is="i18n.advancedMsg(authenticationSelection.helpText)" />
             </div>
           </div>
           <div :class="kcClsx('kcSelectAuthListItemFillClass')"></div>

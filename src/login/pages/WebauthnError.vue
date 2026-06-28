@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<Extract<KcContext, { pageId: "webauthn-error.ftl" }>, I18n>
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'webauthn-error.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -37,8 +34,16 @@ const { url, isAppInitiatedAction, execution } = kcContext;
       :action="url.loginAction"
       method="post"
     >
-      <input type="hidden" id="executionValue" name="authenticationExecution" />
-      <input type="hidden" id="isSetRetry" name="isSetRetry" />
+      <input
+        type="hidden"
+        id="executionValue"
+        name="authenticationExecution"
+      />
+      <input
+        type="hidden"
+        id="isSetRetry"
+        name="isSetRetry"
+      />
     </form>
     <input
       :tabindex="4"
@@ -53,14 +58,7 @@ const { url, isAppInitiatedAction, execution } = kcContext;
         }
       "
       type="button"
-      :class="
-        kcClsx(
-          'kcButtonClass',
-          'kcButtonPrimaryClass',
-          'kcButtonBlockClass',
-          'kcButtonLargeClass',
-        )
-      "
+      :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
       name="try-again"
       id="kc-try-again"
       :value="i18n.msgStr('doTryAgain')"
@@ -74,19 +72,12 @@ const { url, isAppInitiatedAction, execution } = kcContext;
     >
       <button
         type="submit"
-        :class="
-          kcClsx(
-            'kcButtonClass',
-            'kcButtonDefaultClass',
-            'kcButtonBlockClass',
-            'kcButtonLargeClass',
-          )
-        "
+        :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
         id="cancelWebAuthnAIA"
         name="cancel-aia"
         value="true"
       >
-        {{ i18n.msgStr("doCancel") }}
+        {{ i18n.msgStr('doCancel') }}
       </button>
     </form>
   </component>

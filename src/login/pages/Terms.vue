@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<PageProps<Extract<KcContext, { pageId: "terms.ftl" }>, I18n>>();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'terms.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -32,20 +31,20 @@ const { url } = kcContext;
     <div id="kc-terms-text">
       <component :is="props.i18n.msg('termsText')" />
     </div>
-    <form class="form-actions" :action="url.loginAction" method="POST">
+    <form
+      class="form-actions"
+      :action="url.loginAction"
+      method="POST"
+    >
       <input
-        :class="
-          kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')
-        "
+        :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
         name="accept"
         id="kc-accept"
         type="submit"
         :value="props.i18n.msgStr('doAccept')"
       />
       <input
-        :class="
-          kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')
-        "
+        :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
         name="cancel"
         id="kc-decline"
         type="submit"

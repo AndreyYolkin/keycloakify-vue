@@ -1,19 +1,13 @@
 <script setup lang="ts">
-import { clsx } from "keycloakify/tools/clsx";
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import LogoutOtherSessions from "../components/LogoutOtherSessions.vue";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
-import { useScript } from "./LoginRecoveryAuthnCodeConfig.useScript";
+import { clsx } from 'keycloakify/tools/clsx';
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import LogoutOtherSessions from '../components/LogoutOtherSessions.vue';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
+import { useScript } from './LoginRecoveryAuthnCodeConfig.useScript';
 
-const props =
-  defineProps<
-    PageProps<
-      Extract<KcContext, { pageId: "login-recovery-authn-code-config.ftl" }>,
-      I18n
-    >
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-recovery-authn-code-config.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -23,7 +17,7 @@ const { kcClsx } = getKcClsx({
 const kcContext = props.kcContext;
 const { recoveryAuthnCodesConfigBean, isAppInitiatedAction } = kcContext;
 
-const olRecoveryCodesListId = "kc-recovery-codes-list";
+const olRecoveryCodesListId = 'kc-recovery-codes-list';
 
 useScript({ olRecoveryCodesListId, i18n: props.i18n });
 </script>
@@ -41,18 +35,14 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
     </template>
 
     <div
-      :class="
-        clsx(
-          'pf-c-alert',
-          'pf-m-warning',
-          'pf-m-inline',
-          kcClsx('kcRecoveryCodesWarning'),
-        )
-      "
+      :class="clsx('pf-c-alert', 'pf-m-warning', 'pf-m-inline', kcClsx('kcRecoveryCodesWarning'))"
       aria-label="Warning alert"
     >
       <div class="pf-c-alert__icon">
-        <i class="pficon-warning-triangle-o" aria-hidden="true"></i>
+        <i
+          class="pficon-warning-triangle-o"
+          aria-hidden="true"
+        ></i>
       </div>
       <h4 class="pf-c-alert__title">
         <span class="pf-screen-reader">Warning alert:</span>
@@ -65,16 +55,15 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
       </div>
     </div>
 
-    <ol :id="olRecoveryCodesListId" :class="kcClsx('kcRecoveryCodesList')">
+    <ol
+      :id="olRecoveryCodesListId"
+      :class="kcClsx('kcRecoveryCodesList')"
+    >
       <li
-        v-for="(
-          code, index
-        ) in recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList"
+        v-for="(code, index) in recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList"
         :key="code"
       >
-        <span>{{ index + 1 }}:</span> {{ code.slice(0, 4) }}-{{
-          code.slice(4, 8)
-        }}-{{ code.slice(8) }}
+        <span>{{ index + 1 }}:</span> {{ code.slice(0, 4) }}-{{ code.slice(4, 8) }}-{{ code.slice(8) }}
       </li>
     </ol>
 
@@ -85,7 +74,10 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
         :class="clsx('pf-c-button', 'pf-m-link')"
         type="button"
       >
-        <i class="pficon-print" aria-hidden="true"></i>
+        <i
+          class="pficon-print"
+          aria-hidden="true"
+        ></i>
         <component :is="i18n.msg('recovery-codes-print')" />
       </button>
       <button
@@ -93,7 +85,10 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
         :class="clsx('pf-c-button', 'pf-m-link')"
         type="button"
       >
-        <i class="pficon-save" aria-hidden="true"></i>
+        <i
+          class="pficon-save"
+          aria-hidden="true"
+        ></i>
         <component :is="i18n.msg('recovery-codes-download')" />
       </button>
       <button
@@ -101,7 +96,10 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
         :class="clsx('pf-c-button', 'pf-m-link')"
         type="button"
       >
-        <i class="pficon-blueprint" aria-hidden="true"></i>
+        <i
+          class="pficon-blueprint"
+          aria-hidden="true"
+        ></i>
         <component :is="i18n.msg('recovery-codes-copy')" />
       </button>
     </div>
@@ -116,9 +114,7 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
         @change="
           (event) => {
             // @ts-expect-error: This is inherited from the original code
-            document.getElementById('saveRecoveryAuthnCodesBtn').disabled = !(
-              event.target as HTMLInputElement
-            ).checked;
+            document.getElementById('saveRecoveryAuthnCodesBtn').disabled = !(event.target as HTMLInputElement).checked;
           }
         "
       />
@@ -136,9 +132,7 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
       <input
         type="hidden"
         name="generatedRecoveryAuthnCodes"
-        :value="
-          recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesAsString
-        "
+        :value="recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesAsString"
       />
       <input
         type="hidden"
@@ -152,31 +146,22 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
         :value="i18n.msgStr('recovery-codes-label-default')"
       />
 
-      <LogoutOtherSessions :kcClsx="kcClsx" :i18n="i18n" />
+      <LogoutOtherSessions
+        :kcClsx="kcClsx"
+        :i18n="i18n"
+      />
 
       <template v-if="isAppInitiatedAction">
         <input
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonPrimaryClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonLargeClass')"
           id="saveRecoveryAuthnCodesBtn"
           :value="i18n.msgStr('recovery-codes-action-complete')"
           disabled
         />
         <button
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonDefaultClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonLargeClass')"
           id="cancelRecoveryAuthnCodesBtn"
           name="cancel-aia"
           value="true"
@@ -187,14 +172,7 @@ useScript({ olRecoveryCodesListId, i18n: props.i18n });
       <template v-else>
         <input
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonPrimaryClass',
-              'kcButtonBlockClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonPrimaryClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
           id="saveRecoveryAuthnCodesBtn"
           :value="i18n.msgStr('recovery-codes-action-complete')"
           disabled

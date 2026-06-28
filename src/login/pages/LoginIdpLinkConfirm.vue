@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import type { KcContext } from "keycloakify/login/KcContext";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import type { I18n } from "../i18n/i18n";
-import type { PageProps } from "./PageProps";
+import type { KcContext } from 'keycloakify/login/KcContext';
+import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
+import type { I18n } from '../i18n/i18n';
+import type { PageProps } from './PageProps';
 
-const props =
-  defineProps<
-    PageProps<
-      Extract<KcContext, { pageId: "login-idp-link-confirm.ftl" }>,
-      I18n
-    >
-  >();
+const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login-idp-link-confirm.ftl' }>, I18n>>();
 
 const { kcClsx } = getKcClsx({
   doUseDefaultCss: props.doUseDefaultCss,
@@ -33,18 +27,15 @@ const { url, idpAlias } = kcContext;
       <component :is="props.i18n.msg('confirmLinkIdpTitle')" />
     </template>
 
-    <form id="kc-register-form" :action="url.loginAction" method="post">
+    <form
+      id="kc-register-form"
+      :action="url.loginAction"
+      method="post"
+    >
       <div :class="kcClsx('kcFormGroupClass')">
         <button
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonDefaultClass',
-              'kcButtonBlockClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
           name="submitAction"
           id="updateProfile"
           value="updateProfile"
@@ -53,14 +44,7 @@ const { url, idpAlias } = kcContext;
         </button>
         <button
           type="submit"
-          :class="
-            kcClsx(
-              'kcButtonClass',
-              'kcButtonDefaultClass',
-              'kcButtonBlockClass',
-              'kcButtonLargeClass',
-            )
-          "
+          :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
           name="submitAction"
           id="linkAccount"
           value="linkAccount"
