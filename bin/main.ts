@@ -20,6 +20,11 @@ const { buildContext, commandName } = readParams({ apiVersion: 'v1' });
       await command({ buildContext });
       return;
     }
+    case 'initialize-account-theme': {
+      const { command } = await import('./initialize-account-theme/index');
+      await command({ buildContext });
+      return;
+    }
     default:
       process.exit(NOT_IMPLEMENTED_EXIT_CODE);
   }
