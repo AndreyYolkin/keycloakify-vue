@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "keycloakify/login/KcContext";
 import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { clsx } from "keycloakify/tools/clsx";

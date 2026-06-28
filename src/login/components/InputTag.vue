@@ -21,9 +21,13 @@ const value = computed(() => {
     return props.valueOrValues;
 });
 
+// NOTE: the input gets the attribute's OWN html5DataAnnotations (e.g. kcNumberFormat),
+// not the group's — matches the React source of truth (the svelte port spreads
+// `attribute.group?.html5DataAnnotations` here, which is a bug; the group annotations
+// belong on the group container, handled in GroupLabel.vue).
 const html5DataAnnotations = computed(() =>
     Object.fromEntries(
-        Object.entries(props.attribute.group?.html5DataAnnotations ?? {}).map(([key, val]) => [`data-${key}`, val])
+        Object.entries(props.attribute.html5DataAnnotations ?? {}).map(([key, val]) => [`data-${key}`, val])
     )
 );
 
