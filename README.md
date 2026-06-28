@@ -13,7 +13,7 @@ packaging unchanged.
 | Theme       | Status                                                                                       |
 | ----------- | -------------------------------------------------------------------------------------------- |
 | **Login**   | **Complete** — all 38 login pages ported, including `register.ftl` / `UserProfileFormFields` |
-| Account     | Planned — not yet implemented                                                                |
+| **Account** | **Complete** — all 7 classic account pages ported (account, password, sessions, totp, applications, log, federatedIdentity) |
 | Admin/Email | Out of scope                                                                                 |
 
 ## Installation
@@ -41,8 +41,10 @@ The easiest way to get started is the official starter template:
   and `IdpReviewUserProfile`.
 - **`i18nBuilder`** — factory for wiring Keycloakify's `noJsx` i18n engine into Vue (returns `msg()` /
   `advancedMsg()` that produce sanitized `VNode`s).
-- **`bin` handlers** — `_keycloakify-custom-handler` delegates `update-kc-gen`, `eject-page`, and
-  `add-story` so the `keycloakify` CLI treats your project as a Vue theme.
+- **Account theme** — importable from `@keycloakify/vue/account`: its own `DefaultPage` + `Template`,
+  the 7 account pages at `@keycloakify/vue/account/pages/*.vue`, and an account `i18nBuilder`.
+- **`bin` handlers** — `_keycloakify-custom-handler` delegates `update-kc-gen`, `eject-page`,
+  `add-story`, and `initialize-account-theme` so the `keycloakify` CLI treats your project as a Vue theme.
 
 ## Usage
 
