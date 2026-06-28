@@ -8,6 +8,7 @@ import FederatedIdentity from '../src/account/pages/FederatedIdentity.vue';
 import Log from '../src/account/pages/Log.vue';
 import Password from '../src/account/pages/Password.vue';
 import Sessions from '../src/account/pages/Sessions.vue';
+import Totp from '../src/account/pages/Totp.vue';
 import Template from '../src/account/Template.vue';
 import { i18nBuilder } from '../src/account/i18n/i18nBuilder';
 
@@ -258,6 +259,87 @@ describe('Password.vue render', () => {
     expect(wrapper.find('form').exists()).toBe(true);
     expect(wrapper.find('input[name="password-new"]').exists()).toBe(true);
     expect(wrapper.find('input[name="password-confirm"]').exists()).toBe(true);
+    expect(wrapper.html().length).toBeGreaterThan(100);
+  });
+});
+
+describe('Totp.vue render', () => {
+  it('renders the enrollment form (setup wizard / QR mode) with totp and userLabel inputs', async () => {
+    const { getKcContextMock } = createGetKcContextMock({
+      kcContextExtension: { themeName: 'keycloakify-vue', properties: {} },
+      kcContextExtensionPerPage: {},
+      overrides: {},
+    });
+    // Override enabled to false so the setup wizard renders
+    const kcContextBase = getKcContextMock({ pageId: 'totp.ftl' });
+    const kcContext = {
+      ...kcContextBase,
+      totp: {
+        ...(kcContextBase as any).totp,
+        enabled: false,
+        otpCredentials: [],
+      },
+    };
+
+    const { useI18n } = i18nBuilder.build();
+    const { i18n } = useI18n({ kcContext: kcContext as any });
+
+    const wrapper = mount(Totp, {
+      props: {
+        kcContext: kcContext as any,
+        i18n: i18n.value as any,
+        Template: Template as any,
+        doUseDefaultCss: false,
+        classes: {},
+      },
+    });
+
+    await flushPromises();
+    await nextTick();
+    await flushPromises();
+
+    expect(wrapper.find('#kc-totp-settings-form').exists()).toBe(true);
+    expect(wrapper.find('input[name="totp"]').exists()).toBe(true);
+    expect(wrapper.find('#saveTOTPBtn').exists()).toBe(true);
+    expect(wrapper.html().length).toBeGreaterThan(100);
+  });
+
+  it('renders the credentials table with delete form when totp.enabled is true', async () => {
+    const { getKcContextMock } = createGetKcContextMock({
+      kcContextExtension: { themeName: 'keycloakify-vue', properties: {} },
+      kcContextExtensionPerPage: {},
+      overrides: {},
+    });
+    const kcContextBase = getKcContextMock({ pageId: 'totp.ftl' });
+    const kcContext = {
+      ...kcContextBase,
+      totp: {
+        ...(kcContextBase as any).totp,
+        enabled: true,
+        otpCredentials: [{ id: 'cred1', userLabel: 'My Phone' }],
+      },
+    };
+
+    const { useI18n } = i18nBuilder.build();
+    const { i18n } = useI18n({ kcContext: kcContext as any });
+
+    const wrapper = mount(Totp, {
+      props: {
+        kcContext: kcContext as any,
+        i18n: i18n.value as any,
+        Template: Template as any,
+        doUseDefaultCss: false,
+        classes: {},
+      },
+    });
+
+    await flushPromises();
+    await nextTick();
+    await flushPromises();
+
+    expect(wrapper.find('table').exists()).toBe(true);
+    expect(wrapper.find('input[name="submitAction"]').exists()).toBe(true);
+    expect(wrapper.find('input[name="credentialId"]').exists()).toBe(true);
     expect(wrapper.html().length).toBeGreaterThan(100);
   });
 });

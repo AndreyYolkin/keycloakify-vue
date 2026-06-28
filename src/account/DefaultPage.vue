@@ -11,6 +11,7 @@ const FederatedIdentity = defineAsyncComponent(() => import('./pages/FederatedId
 const Log = defineAsyncComponent(() => import('./pages/Log.vue'));
 const Password = defineAsyncComponent(() => import('./pages/Password.vue'));
 const Sessions = defineAsyncComponent(() => import('./pages/Sessions.vue'));
+const Totp = defineAsyncComponent(() => import('./pages/Totp.vue'));
 
 const props = defineProps<{
   kcContext: KcContext;
@@ -34,6 +35,8 @@ const pageComponent = computed<Component>(() => {
       return Password;
     case 'sessions.ftl':
       return Sessions;
+    case 'totp.ftl':
+      return Totp;
     default:
       return NotImplemented;
   }
