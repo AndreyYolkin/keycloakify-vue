@@ -1,14 +1,37 @@
 {
   "name": "@keycloakify/vue",
-  "private": true,
-  "version": "0.0.0",
+  "description": "Vue Components for Keycloakify",
+  "keywords": ["keycloak", "vue", "keycloakify"],
+  "homepage": "https://www.keycloakify.dev",
+  "repository": { "type": "git", "url": "git+https://github.com/AndreyYolkin/keycloakify-vue.git" },
+  "license": "MIT",
+  "sideEffects": false,
+  "publishConfig": { "access": "public" },
+  "version": "0.1.0",
   "type": "module",
+  "files": [
+    "keycloakify-vue",
+    "!keycloakify-vue/**/*.test.*",
+    "!keycloakify-vue/**/*.spec.*",
+    "stories",
+    "src",
+    "!src/**/*.test.*",
+    "!src/**/*.spec.*",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsx scripts/build.ts",
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "link-in-starter": "tsx scripts/link-in-starter.ts",
+    "watch": "tsx scripts/watch.ts",
+    "_format": "prettier '**/*.{ts,vue,html,json,md}'",
+    "format": "yarn _format --write",
+    "changelog": "npx conventional-changelog -t -p angular -i CHANGELOG.md -s -r 0"
   },
   "bin": {
     "_keycloakify-custom-handler": "./bin/main.ts"
