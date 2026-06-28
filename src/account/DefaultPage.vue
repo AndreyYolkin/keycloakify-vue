@@ -6,6 +6,8 @@ import type { I18n } from './i18n/i18n';
 import NotImplemented from './pages/NotImplemented.vue';
 
 const Account = defineAsyncComponent(() => import('./pages/Account.vue'));
+const Applications = defineAsyncComponent(() => import('./pages/Applications.vue'));
+const FederatedIdentity = defineAsyncComponent(() => import('./pages/FederatedIdentity.vue'));
 const Log = defineAsyncComponent(() => import('./pages/Log.vue'));
 const Sessions = defineAsyncComponent(() => import('./pages/Sessions.vue'));
 
@@ -21,6 +23,10 @@ const pageComponent = computed<Component>(() => {
   switch (props.kcContext.pageId) {
     case 'account.ftl':
       return Account;
+    case 'applications.ftl':
+      return Applications;
+    case 'federatedIdentity.ftl':
+      return FederatedIdentity;
     case 'log.ftl':
       return Log;
     case 'sessions.ftl':
