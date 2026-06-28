@@ -9,7 +9,7 @@ import { i18nBuilder } from "../src/login/i18n/i18nBuilder";
 describe("Login.vue render", () => {
     it("renders the login form (username, password, submit)", async () => {
         const { getKcContextMock } = createGetKcContextMock({
-            kcContextExtension: { themeName: "keycloakify-vue-poc", properties: {} },
+            kcContextExtension: { themeName: "keycloakify-vue", properties: {} },
             kcContextExtensionPerPage: {},
             overrides: {}
         });

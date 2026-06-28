@@ -7,7 +7,7 @@ describe("i18n bridge", () => {
         const { useI18n } = i18nBuilder.build();
         // Valid KcContextLike shape: themeName + realm are required by createGetI18n
         const kcContext = {
-            themeName: "keycloakify-vue-poc",
+            themeName: "keycloakify-vue",
             realm: { internationalizationEnabled: false },
             locale: undefined,
             "x-keycloakify": { messages: {} }
