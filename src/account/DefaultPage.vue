@@ -9,6 +9,7 @@ const Account = defineAsyncComponent(() => import('./pages/Account.vue'));
 const Applications = defineAsyncComponent(() => import('./pages/Applications.vue'));
 const FederatedIdentity = defineAsyncComponent(() => import('./pages/FederatedIdentity.vue'));
 const Log = defineAsyncComponent(() => import('./pages/Log.vue'));
+const Password = defineAsyncComponent(() => import('./pages/Password.vue'));
 const Sessions = defineAsyncComponent(() => import('./pages/Sessions.vue'));
 
 const props = defineProps<{
@@ -29,6 +30,8 @@ const pageComponent = computed<Component>(() => {
       return FederatedIdentity;
     case 'log.ftl':
       return Log;
+    case 'password.ftl':
+      return Password;
     case 'sessions.ftl':
       return Sessions;
     default:

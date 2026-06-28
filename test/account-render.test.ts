@@ -6,6 +6,7 @@ import Account from '../src/account/pages/Account.vue';
 import Applications from '../src/account/pages/Applications.vue';
 import FederatedIdentity from '../src/account/pages/FederatedIdentity.vue';
 import Log from '../src/account/pages/Log.vue';
+import Password from '../src/account/pages/Password.vue';
 import Sessions from '../src/account/pages/Sessions.vue';
 import Template from '../src/account/Template.vue';
 import { i18nBuilder } from '../src/account/i18n/i18nBuilder';
@@ -224,6 +225,39 @@ describe('Applications.vue render', () => {
 
     expect(wrapper.find('table').exists()).toBe(true);
     expect(wrapper.find('input[name="stateChecker"]').exists()).toBe(true);
+    expect(wrapper.html().length).toBeGreaterThan(100);
+  });
+});
+
+describe('Password.vue render', () => {
+  it('renders the password form with new-password and confirm inputs', async () => {
+    const { getKcContextMock } = createGetKcContextMock({
+      kcContextExtension: { themeName: 'keycloakify-vue', properties: {} },
+      kcContextExtensionPerPage: {},
+      overrides: {},
+    });
+    const kcContext = getKcContextMock({ pageId: 'password.ftl' });
+
+    const { useI18n } = i18nBuilder.build();
+    const { i18n } = useI18n({ kcContext: kcContext as any });
+
+    const wrapper = mount(Password, {
+      props: {
+        kcContext: kcContext as any,
+        i18n: i18n.value as any,
+        Template: Template as any,
+        doUseDefaultCss: false,
+        classes: {},
+      },
+    });
+
+    await flushPromises();
+    await nextTick();
+    await flushPromises();
+
+    expect(wrapper.find('form').exists()).toBe(true);
+    expect(wrapper.find('input[name="password-new"]').exists()).toBe(true);
+    expect(wrapper.find('input[name="password-confirm"]').exists()).toBe(true);
     expect(wrapper.html().length).toBeGreaterThan(100);
   });
 });
