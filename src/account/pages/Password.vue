@@ -161,7 +161,7 @@ const isSubmitDisabled = computed(
             autofocus
             autocomplete="current-password"
             :value="currentPassword"
-            @change="(e) => { currentPassword = (e.target as HTMLInputElement).value }"
+            @input="(e) => { currentPassword = (e.target as HTMLInputElement).value }"
           />
         </div>
       </div>
@@ -191,7 +191,7 @@ const isSubmitDisabled = computed(
             name="password-new"
             autocomplete="new-password"
             :value="newPassword"
-            @change="onNewPasswordChange"
+            @input="onNewPasswordChange"
             @blur="onNewPasswordBlur"
           />
         </div>
@@ -215,7 +215,7 @@ const isSubmitDisabled = computed(
             name="password-confirm"
             autocomplete="new-password"
             :value="newPasswordConfirm"
-            @change="onNewPasswordConfirmChange"
+            @input="onNewPasswordConfirmChange"
             @blur="onNewPasswordConfirmBlur"
           />
         </div>
