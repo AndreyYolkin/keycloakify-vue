@@ -20,7 +20,7 @@ fs.rmSync(distDirPath, { recursive: true, force: true });
 fs.mkdirSync(outDirPath, { recursive: true });
 
 // Recursively collect files under `src` matching a predicate, returning paths relative to `src`.
-function crawl(dirPath: string, predicate: (relPath: string) => boolean): string[] {
+function crawl(predicate: (relPath: string) => boolean): string[] {
     const out: string[] = [];
     const walk = (abs: string) => {
         for (const entry of fs.readdirSync(abs, { withFileTypes: true })) {
@@ -33,7 +33,7 @@ function crawl(dirPath: string, predicate: (relPath: string) => boolean): string
             }
         }
     };
-    walk(dirPath);
+    walk(srcDirPath);
     return out;
 }
 
@@ -43,7 +43,7 @@ const isTestFile = (rel: string) => /\.(test|spec)\./.test(rel);
 run(`npx vue-tsc -p tsconfig.build.json`, { cwd: rootDirPath });
 
 // 3. Transpile .ts -> .js (skip .d.ts and test files), preserving structure.
-const tsRelPaths = crawl(srcDirPath, rel => rel.endsWith(".ts") && !rel.endsWith(".d.ts") && !isTestFile(rel));
+const tsRelPaths = crawl(rel => rel.endsWith(".ts") && !rel.endsWith(".d.ts") && !isTestFile(rel));
 esbuild.buildSync({
     entryPoints: tsRelPaths.map(rel => pathJoin(srcDirPath, rel)),
     outdir: outDirPath,
@@ -57,7 +57,7 @@ esbuild.buildSync({
 });
 
 // 4. Copy raw .vue files verbatim, preserving structure.
-const vueRelPaths = crawl(srcDirPath, rel => rel.endsWith(".vue") && !isTestFile(rel));
+const vueRelPaths = crawl(rel => rel.endsWith(".vue") && !isTestFile(rel));
 for (const rel of vueRelPaths) {
     const dest = pathJoin(outDirPath, rel);
     fs.mkdirSync(pathJoin(dest, ".."), { recursive: true });
@@ -71,9 +71,9 @@ fs.mkdirSync(pathJoin(binOutFilePath, ".."), { recursive: true });
     // Restore `require` under pure ESM for transitive require() (e.g. cli-select's require("readline")).
     const banner = "import { createRequire } from 'module'; const require = createRequire(import.meta.url);";
     run(
-        `npx esbuild ${pathJoin(rootDirPath, "bin", "main.ts")} --bundle --minify ` +
+        `npx esbuild "${pathJoin(rootDirPath, "bin", "main.ts")}" --bundle --minify ` +
             `--external:prettier --platform=node --format=esm ` +
-            `--log-override:direct-eval=silent --banner:js="${banner}" --outfile=${binOutFilePath}`,
+            `--log-override:direct-eval=silent --banner:js="${banner}" --outfile="${binOutFilePath}"`,
         { cwd: rootDirPath }
     );
     fs.chmodSync(
@@ -112,8 +112,9 @@ for (const rel of tsRelPaths) {
     const noExt = rel.replace(/\.ts$/, "");
     if (noExt.endsWith("/index")) {
         addExport(`./${noExt.slice(0, -"/index".length)}`, js, dts);
+    } else {
+        addExport(`./${noExt}`, js, dts);
     }
-    addExport(`./${noExt}`, js, dts);
 }
 
 // 8. Write generated exports + bin field into dist/package.json.
