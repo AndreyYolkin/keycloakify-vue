@@ -1,66 +1,106 @@
-# keycloakify-vue (proof of concept)
+# @keycloakify/vue
 
-> A **Vue 3** component library for [Keycloakify](https://github.com/keycloakify/keycloakify) — build custom Keycloak themes with Vue instead of React.
->
-> **Status:** proof of concept. The `login.ftl` page is implemented end-to-end: it renders in dev on a mock context **and** compiles to a real Keycloak theme `.jar` via the standard `keycloakify` CLI. This is intended as a concrete artifact to discuss an official `@keycloakify/vue` with the maintainers (see [keycloakify#540](https://github.com/keycloakify/keycloakify/discussions/540)).
+Vue 3 components for building Keycloak login themes with [Keycloakify](https://github.com/keycloakify/keycloakify).
 
-## Why this works
+`@keycloakify/vue` is a community Vue 3 port of Keycloakify's UI layer, mirroring the architecture of
+[`@keycloakify/svelte`](https://github.com/keycloakify/keycloakify-svelte). It reuses Keycloakify's
+framework-agnostic build tooling and core logic via a peer dependency — only the Vue UI layer (layer 3)
+is reimplemented here. You write your Keycloak theme in Vue; `keycloakify` handles the build + jar
+packaging unchanged.
+
+## Status
+
+| Theme       | Status                                                                                       |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| **Login**   | **Complete** — all 38 login pages ported, including `register.ftl` / `UserProfileFormFields` |
+| Account     | Planned — not yet implemented                                                                |
+| Admin/Email | Out of scope                                                                                 |
+
+## Installation
+
+```bash
+npm install --save-dev @keycloakify/vue
+```
+
+**Peer dependencies:** `keycloakify ^11.15.1` and `vue ^3.5.0` must be installed in your project.
+
+The easiest way to get started is the official starter template:
+
+- **[keycloakify-starter-vue](https://github.com/AndreyYolkin/keycloakify-starter-vue)** — a ready-to-use
+  Vite + Vue project wired to `@keycloakify/vue`, analogous to
+  [`keycloakify-starter-svelte`](https://github.com/keycloakify/keycloakify-starter-svelte).
+
+## What's Included
+
+- **`DefaultPage`** — top-level dispatcher component that routes all 38 login `pageId` values to the
+  correct page component.
+- **`Template`** — the outer page shell (header, info/error alerts, social providers, language switcher).
+- **Per-page components** — importable individually from `@keycloakify/vue/login/pages/*.vue`
+  (e.g. `Login.vue`, `Register.vue`, `LoginOtp.vue`, …).
+- **`UserProfileFormFields`** — full dynamic user-profile form suite used by `Register`, `LoginUpdateProfile`,
+  and `IdpReviewUserProfile`.
+- **`i18nBuilder`** — factory for wiring Keycloakify's `noJsx` i18n engine into Vue (returns `msg()` /
+  `advancedMsg()` that produce sanitized `VNode`s).
+- **`bin` handlers** — `_keycloakify-custom-handler` delegates `update-kc-gen`, `eject-page`, and
+  `add-story` so the `keycloakify` CLI treats your project as a Vue theme.
+
+## Usage
+
+Clone or scaffold from the [starter](https://github.com/AndreyYolkin/keycloakify-starter-vue) for the
+full wiring. At its core a consumer project has a `KcPage.vue` that looks like:
+
+```vue
+<script setup lang="ts">
+import { DefaultPage } from '@keycloakify/vue';
+import type { KcContext } from './KcContext';
+import { useI18n } from './i18n';
+import Template from '@keycloakify/vue/login/Template.vue';
+
+const props = defineProps<{ kcContext: KcContext }>();
+const { i18n } = useI18n({ kcContext: props.kcContext });
+</script>
+
+<template>
+  <DefaultPage
+    :kcContext
+    :i18n
+    :Template
+  />
+</template>
+```
+
+## How It Works / Relationship to Keycloakify
 
 Keycloakify is built in three layers:
 
-1. **Build tooling / CLI** (`keycloakify/bin`, `keycloakify/vite-plugin`) — framework-agnostic. It reads a built SPA (`dist/`), rewrites asset paths to FreeMarker variables, generates `.ftl` templates that inject Keycloak data into `window.kcContext`, and packages a theme `.jar`.
-2. **Core logic** (`KcContext` types, `i18n/noJsx`, `getUserProfileApi`, `kcClsx`, `kcSanitize`) — deliberately framework-agnostic.
-3. **UI components** — the only React-coupled layer.
+1. **Build tooling / CLI** (`keycloakify/bin`, `keycloakify/vite-plugin`) — framework-agnostic. Reads a
+   built SPA, rewrites asset paths to FreeMarker variables, generates `.ftl` templates, packages the
+   theme `.jar`.
+2. **Core logic** (`KcContext` types, `i18n/noJsx`, `getUserProfileApi`, `kcClsx`, `kcSanitize`) —
+   deliberately framework-agnostic.
+3. **UI components** — the only framework-coupled layer.
 
-This PoC reuses layers 1 & 2 **unchanged** (via a peer dependency on `keycloakify`) and reimplements layer 3 — plus a thin glue layer — in Vue 3. The approach mirrors the existing [`@keycloakify/svelte`](https://github.com/keycloakify/keycloakify-svelte) package.
+`@keycloakify/vue` reuses layers 1 and 2 unchanged (via the `keycloakify` peer dependency) and
+reimplements layer 3 in Vue 3.
 
-The core CLI recognizes a non-React framework through a `_keycloakify-custom-handler` binary; this repo ships a minimal one that generates a Vue-flavored `kc.gen.ts`. **No changes to `keycloakify` core are required.**
+**Distribution:** the package ships raw `.vue` single-file components plus `.d.ts` types. Your project's
+Vite + `@vitejs/plugin-vue` compiles them — no pre-bundled JS is shipped.
 
-## What's implemented
-
-- Glue composables: `useInsertLinkTags`, `useInsertScriptTags`, `useSetClassName`.
-- i18n bridge over the core `noJsx` engine — `msg()`/`advancedMsg()` return a sanitized Vue `VNode`.
-- Components: `Template`, `Login`, `PasswordWrapper`, `DefaultPage` (+ a `NotImplemented` placeholder for unported pages).
-- Custom-handler bin (`update-kc-gen`) so the core CLI treats the project as Vue.
-- Consumer wiring + a dev `kcContext` mock.
-- Tests: i18n bridge unit test + a headless render test for the login form.
-
-**Out of scope (for now):** the other ~47 login/account pages, `UserProfileFormFields` / register, and the account/admin/email themes.
-
-## Quick start
+## Contributing
 
 ```bash
+git clone https://github.com/AndreyYolkin/keycloakify-vue
+git clone https://github.com/AndreyYolkin/keycloakify-starter-vue
+
+cd keycloakify-vue
 yarn install
-
-# Dev — renders login.ftl on a mock kcContext
-yarn dev
-
-# Type-check + tests
-yarn typecheck
-yarn test
-
-# Build a Keycloak theme jar (requires Java + Maven for the packaging step)
-yarn build-keycloak-theme
-# -> dist_keycloak/keycloak-theme-for-kc-*.jar
+yarn link-in-starter   # links the built package into the starter
 ```
 
-The generated `login/login.ftl` references the Vue bundle via `${xKeycloakify.resourcesPath}` and injects `window.kcContext`, exactly like a React Keycloakify theme.
+Changes to the library are reflected in the starter after `yarn build` (or `yarn watch`).
 
-## Layout
-
-```
-src/
-  lib/login/        # the future @keycloakify/vue library (composables, components, i18n bridge)
-  login/            # consumer-side wiring (KcContext, i18n, KcPage)
-  kc.gen.{ts,vue}   # generated by the custom handler
-bin/                # _keycloakify-custom-handler (update-kc-gen)
-```
-
-In a real package this would split into a library (`@keycloakify/vue`) and a starter (`keycloakify-starter-vue`), as the Svelte ecosystem does.
-
-## Credits
-
-Architecture mirrors [`@keycloakify/svelte`](https://github.com/keycloakify/keycloakify-svelte) by Luca Peruzzo & Joseph Garrone. Built on top of [Keycloakify](https://github.com/keycloakify/keycloakify). Not (yet) an official Keycloakify package.
+Issues and pull requests are welcome at
+[github.com/AndreyYolkin/keycloakify-vue](https://github.com/AndreyYolkin/keycloakify-vue).
 
 ## License
 
