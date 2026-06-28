@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { i18nBuilder } from '@keycloakify/vue/account';
 import type { ThemeName } from '../kc.gen';
 

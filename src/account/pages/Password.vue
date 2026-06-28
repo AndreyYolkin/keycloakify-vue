@@ -98,9 +98,7 @@ const kcContextWithMessageOverride = computed(() => ({
   })(),
 }));
 
-const isSubmitDisabled = computed(
-  () => newPasswordError.value !== '' || newPasswordConfirmError.value !== '',
-);
+const isSubmitDisabled = computed(() => newPasswordError.value !== '' || newPasswordConfirmError.value !== '');
 </script>
 
 <template>
@@ -161,7 +159,11 @@ const isSubmitDisabled = computed(
             autofocus
             autocomplete="current-password"
             :value="currentPassword"
-            @input="(e) => { currentPassword = (e.target as HTMLInputElement).value }"
+            @input="
+              (e) => {
+                currentPassword = (e.target as HTMLInputElement).value;
+              }
+            "
           />
         </div>
       </div>

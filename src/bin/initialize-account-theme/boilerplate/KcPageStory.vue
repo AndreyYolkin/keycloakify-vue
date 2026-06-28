@@ -9,5 +9,5 @@ const kcContextMock = computed(() => getKcContextMock({ pageId: props.pageId, ov
 </script>
 
 <template>
-    <KcPage :kcContext="kcContextMock" />
+  <KcPage :kcContext="kcContextMock" />
 </template>

@@ -59,7 +59,9 @@ const { msg, msgStr, advancedMsg } = props.i18n;
             <td
               v-if="totp.otpCredentials.length > 1"
               class="provider"
-            >{{ credential.id }}</td>
+            >
+              {{ credential.id }}
+            </td>
             <td class="provider">{{ credential.userLabel || '' }}</td>
             <td class="action">
               <form
@@ -140,9 +142,7 @@ const { msg, msgStr, advancedMsg } = props.i18n;
                 <li id="kc-totp-algorithm">
                   <component :is="msg('totpAlgorithm')" />: {{ totp.policy.getAlgorithmKey() }}
                 </li>
-                <li id="kc-totp-digits">
-                  <component :is="msg('totpDigits')" />: {{ totp.policy.digits }}
-                </li>
+                <li id="kc-totp-digits"><component :is="msg('totpDigits')" />: {{ totp.policy.digits }}</li>
                 <li
                   v-if="totp.policy.type === 'totp'"
                   id="kc-totp-period"
@@ -256,7 +256,8 @@ const { msg, msgStr, advancedMsg } = props.i18n;
               <span
                 v-if="totp.otpCredentials.length >= 1"
                 class="required"
-              >*</span>
+                >*</span
+              >
             </div>
             <div class="col-sm-10 col-md-10">
               <input

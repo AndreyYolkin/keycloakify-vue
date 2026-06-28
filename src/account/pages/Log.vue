@@ -54,7 +54,8 @@ const { log } = kcContext;
             <span
               v-for="(detail, detailIndex) in event.details"
               :key="detailIndex"
-            >{{ `${detail.key} = ${detail.value}` }}{{ detailIndex < event.details.length - 1 ? ', ' : '' }}</span>
+              >{{ `${detail.key} = ${detail.value}` }}{{ detailIndex < event.details.length - 1 ? ', ' : '' }}</span
+            >
           </td>
         </tr>
       </tbody>

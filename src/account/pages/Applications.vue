@@ -134,9 +134,7 @@ function isArrayWithEmptyObject(variable: unknown): boolean {
                         </template>
                         <template v-else>{{ clientRole.clientId }}</template>
                       </strong>
-                      <template
-                        v-if="roleIndex < application.resourceRolesAvailable[resource].length - 1"
-                      >, </template>
+                      <template v-if="roleIndex < application.resourceRolesAvailable[resource].length - 1">, </template>
                     </span>
                   </span>
                 </template>

@@ -66,7 +66,8 @@ const { url, realm, messagesPerField, stateChecker, account, referrer } = kcCont
             <span
               v-if="realm.editUsernameAllowed"
               class="required"
-            >*</span>
+              >*</span
+            >
           </div>
           <div class="col-sm-10 col-md-10">
             <input

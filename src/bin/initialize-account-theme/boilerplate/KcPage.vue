@@ -13,11 +13,11 @@ const classes = {} satisfies { [key in ClassKey]?: string };
 </script>
 
 <template>
-    <DefaultPage
-        :kcContext="kcContext"
-        :i18n="i18n"
-        :classes="classes"
-        :Template="Template"
-        :doUseDefaultCss="true"
-    />
+  <DefaultPage
+    :kcContext="kcContext"
+    :i18n="i18n"
+    :classes="classes"
+    :Template="Template"
+    :doUseDefaultCss="true"
+  />
 </template>
