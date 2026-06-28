@@ -10,11 +10,11 @@ packaging unchanged.
 
 ## Status
 
-| Theme       | Status                                                                                       |
-| ----------- | -------------------------------------------------------------------------------------------- |
-| **Login**   | **Complete** — all 38 login pages ported, including `register.ftl` / `UserProfileFormFields` |
+| Theme       | Status                                                                                                                      |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **Login**   | **Complete** — all 38 login pages ported, including `register.ftl` / `UserProfileFormFields`                                |
 | **Account** | **Complete** — all 7 classic account pages ported (account, password, sessions, totp, applications, log, federatedIdentity) |
-| Admin/Email | Out of scope                                                                                 |
+| Admin/Email | Out of scope                                                                                                                |
 
 ## Installation
 
