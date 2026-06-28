@@ -6,21 +6,11 @@ const config: StorybookConfig = {
     framework: {
         name: "@storybook/vue3-vite",
         options: {}
-    },
-    // Serve PatternFly CSS + Keycloak scripts in `storybook dev` only, so
-    // Template's `isReadyToRender` gate (which waits on stylesheet `load`
-    // events) passes. Excluded from `build-storybook` to avoid the plugin's
-    // theme-build hooks running during a static build.
-    viteFinal: async (viteConfig, { configType }) => {
-        if (configType === "DEVELOPMENT") {
-            const { keycloakify } = await import("keycloakify/vite-plugin");
-            viteConfig.plugins = [
-                ...(viteConfig.plugins ?? []),
-                keycloakify({ themeName: "keycloakify-vue", accountThemeImplementation: "none" })
-            ];
-        }
-        return viteConfig;
     }
+    // NOTE: the keycloakify vite-plugin is intentionally NOT added here. Its dev
+    // hooks expect a consumer app (entry html / dist) and hang in a pure library
+    // Storybook. Pages render via `doUseDefaultCss: false` (see stories KcPage).
+    // Fully-styled stories run from keycloakify-starter-vue with the plugin (Phase D).
 };
 
 export default config;
