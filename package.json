@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsx scripts/build.ts",
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit",
     "storybook": "storybook dev -p 6006 --no-open",
