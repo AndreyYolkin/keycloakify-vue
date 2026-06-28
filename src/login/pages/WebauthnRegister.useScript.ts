@@ -5,61 +5,67 @@ import { waitForElementMountedOnDom } from "keycloakify/tools/waitForElementMoun
 import type { KcContext } from "keycloakify/login/KcContext";
 
 type KcContextLike = {
-    url: {
-        resourcesPath: string;
-    };
-    challenge: string;
-    userid: string;
-    username: string;
-    signatureAlgorithms: string[];
-    rpEntityName: string;
-    rpId: string;
-    attestationConveyancePreference: string;
-    authenticatorAttachment: string;
-    requireResidentKey: string;
-    userVerificationRequirement: string;
-    createTimeout: number | string;
-    excludeCredentialIds: string;
+  url: {
+    resourcesPath: string;
+  };
+  challenge: string;
+  userid: string;
+  username: string;
+  signatureAlgorithms: string[];
+  rpEntityName: string;
+  rpId: string;
+  attestationConveyancePreference: string;
+  authenticatorAttachment: string;
+  requireResidentKey: string;
+  userVerificationRequirement: string;
+  createTimeout: number | string;
+  excludeCredentialIds: string;
 };
 
-assert<keyof KcContextLike extends keyof KcContext.WebauthnRegister ? true : false>();
+assert<
+  keyof KcContextLike extends keyof KcContext.WebauthnRegister ? true : false
+>();
 assert<KcContext.WebauthnRegister extends KcContextLike ? true : false>();
 
 type I18nLike = {
-    msgStr: (
-        key:
-            | "webauthn-registration-init-label"
-            | "webauthn-registration-init-label-prompt"
-            | "webauthn-unsupported-browser-text"
-    ) => string;
-    isFetchingTranslations: boolean;
+  msgStr: (
+    key:
+      | "webauthn-registration-init-label"
+      | "webauthn-registration-init-label-prompt"
+      | "webauthn-unsupported-browser-text",
+  ) => string;
+  isFetchingTranslations: boolean;
 };
 
-export function useScript(params: { authButtonId: string; kcContext: KcContextLike; i18n: Ref<I18nLike> }) {
-    const { authButtonId, kcContext, i18n } = params;
+export function useScript(params: {
+  authButtonId: string;
+  kcContext: KcContextLike;
+  i18n: Ref<I18nLike>;
+}) {
+  const { authButtonId, kcContext, i18n } = params;
 
-    const {
-        url,
-        challenge,
-        userid,
-        username,
-        signatureAlgorithms,
-        rpEntityName,
-        rpId,
-        attestationConveyancePreference,
-        authenticatorAttachment,
-        requireResidentKey,
-        userVerificationRequirement,
-        createTimeout,
-        excludeCredentialIds
-    } = kcContext;
+  const {
+    url,
+    challenge,
+    userid,
+    username,
+    signatureAlgorithms,
+    rpEntityName,
+    rpId,
+    attestationConveyancePreference,
+    authenticatorAttachment,
+    requireResidentKey,
+    userVerificationRequirement,
+    createTimeout,
+    excludeCredentialIds,
+  } = kcContext;
 
-    const { insertScriptTags } = useInsertScriptTags({
-        componentOrHookName: "WebauthnRegister",
-        scriptTags: [
-            {
-                type: "module",
-                textContent: () => `
+  const { insertScriptTags } = useInsertScriptTags({
+    componentOrHookName: "WebauthnRegister",
+    scriptTags: [
+      {
+        type: "module",
+        textContent: () => `
                     import { registerByWebAuthn } from "${url.resourcesPath}/js/webauthnRegister.js";
                     const registerButton = document.getElementById('${authButtonId}');
                     registerButton.addEventListener("click", function() {
@@ -82,28 +88,28 @@ export function useScript(params: { authButtonId: string; kcContext: KcContextLi
                         };
                         registerByWebAuthn(input);
                     });
-                `
-            }
-        ]
-    });
+                `,
+      },
+    ],
+  });
 
-    onMounted(() => {
-        const stopWatch = watch(
-            () => i18n.value.isFetchingTranslations,
-            async isFetching => {
-                if (isFetching) {
-                    return;
-                }
+  onMounted(() => {
+    const stopWatch = watch(
+      () => i18n.value.isFetchingTranslations,
+      async (isFetching) => {
+        if (isFetching) {
+          return;
+        }
 
-                stopWatch();
+        stopWatch();
 
-                await waitForElementMountedOnDom({
-                    elementId: authButtonId
-                });
+        await waitForElementMountedOnDom({
+          elementId: authButtonId,
+        });
 
-                insertScriptTags();
-            },
-            { immediate: true }
-        );
-    });
+        insertScriptTags();
+      },
+      { immediate: true },
+    );
+  });
 }

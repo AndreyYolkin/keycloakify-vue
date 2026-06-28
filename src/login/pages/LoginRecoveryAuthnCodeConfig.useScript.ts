@@ -3,21 +3,29 @@ import { useInsertScriptTags } from "../../tools/useInsertScriptTags";
 import { waitForElementMountedOnDom } from "keycloakify/tools/waitForElementMountedOnDom";
 
 type I18nLike = {
-    msgStr: (key: "recovery-codes-download-file-header" | "recovery-codes-download-file-description" | "recovery-codes-download-file-date") => string;
-    isFetchingTranslations: boolean;
+  msgStr: (
+    key:
+      | "recovery-codes-download-file-header"
+      | "recovery-codes-download-file-description"
+      | "recovery-codes-download-file-date",
+  ) => string;
+  isFetchingTranslations: boolean;
 };
 
-export function useScript(params: { olRecoveryCodesListId: string; i18n: I18nLike }) {
-    const { olRecoveryCodesListId, i18n } = params;
+export function useScript(params: {
+  olRecoveryCodesListId: string;
+  i18n: I18nLike;
+}) {
+  const { olRecoveryCodesListId, i18n } = params;
 
-    const { msgStr, isFetchingTranslations } = i18n;
+  const { msgStr, isFetchingTranslations } = i18n;
 
-    const { insertScriptTags } = useInsertScriptTags({
-        componentOrHookName: "LoginRecoveryAuthnCodeConfig",
-        scriptTags: [
-            {
-                type: "text/javascript",
-                textContent: () => `
+  const { insertScriptTags } = useInsertScriptTags({
+    componentOrHookName: "LoginRecoveryAuthnCodeConfig",
+    scriptTags: [
+      {
+        type: "text/javascript",
+        textContent: () => `
 
                     /* copy recovery codes  */
                     function copyRecoveryCodes() {
@@ -128,20 +136,20 @@ export function useScript(params: { olRecoveryCodesListId: string; i18n: I18nLik
 
                     var printButton = document.getElementById("printRecoveryCodes");
                     printButton && printButton.addEventListener("click", printRecoveryCodes);
-                `
-            }
-        ]
+                `,
+      },
+    ],
+  });
+
+  onMounted(async () => {
+    if (isFetchingTranslations) {
+      return;
+    }
+
+    await waitForElementMountedOnDom({
+      elementId: olRecoveryCodesListId,
     });
 
-    onMounted(async () => {
-        if (isFetchingTranslations) {
-            return;
-        }
-
-        await waitForElementMountedOnDom({
-            elementId: olRecoveryCodesListId
-        });
-
-        insertScriptTags();
-    });
+    insertScriptTags();
+  });
 }

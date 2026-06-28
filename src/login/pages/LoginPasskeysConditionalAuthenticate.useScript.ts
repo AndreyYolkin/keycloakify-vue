@@ -5,35 +5,57 @@ import { waitForElementMountedOnDom } from "keycloakify/tools/waitForElementMoun
 import type { KcContext } from "keycloakify/login/KcContext";
 
 type KcContextLike = {
-    url: {
-        resourcesPath: string;
-    };
-    isUserIdentified: boolean | "true" | "false";
-    challenge: string;
-    userVerification: string;
-    rpId: string;
-    createTimeout: number | string;
+  url: {
+    resourcesPath: string;
+  };
+  isUserIdentified: boolean | "true" | "false";
+  challenge: string;
+  userVerification: string;
+  rpId: string;
+  createTimeout: number | string;
 };
 
-assert<keyof KcContextLike extends keyof KcContext.LoginPasskeysConditionalAuthenticate ? true : false>();
-assert<KcContext.LoginPasskeysConditionalAuthenticate extends KcContextLike ? true : false>();
+assert<
+  keyof KcContextLike extends keyof KcContext.LoginPasskeysConditionalAuthenticate
+    ? true
+    : false
+>();
+assert<
+  KcContext.LoginPasskeysConditionalAuthenticate extends KcContextLike
+    ? true
+    : false
+>();
 
 type I18nLike = {
-    msgStr: (key: "webauthn-unsupported-browser-text" | "passkey-unsupported-browser-text") => string;
-    isFetchingTranslations: boolean;
+  msgStr: (
+    key:
+      "webauthn-unsupported-browser-text" | "passkey-unsupported-browser-text",
+  ) => string;
+  isFetchingTranslations: boolean;
 };
 
-export function useScript(params: { authButtonId: string; kcContext: KcContextLike; i18n: Ref<I18nLike> }) {
-    const { authButtonId, kcContext, i18n } = params;
+export function useScript(params: {
+  authButtonId: string;
+  kcContext: KcContextLike;
+  i18n: Ref<I18nLike>;
+}) {
+  const { authButtonId, kcContext, i18n } = params;
 
-    const { url, isUserIdentified, challenge, userVerification, rpId, createTimeout } = kcContext;
+  const {
+    url,
+    isUserIdentified,
+    challenge,
+    userVerification,
+    rpId,
+    createTimeout,
+  } = kcContext;
 
-    const { insertScriptTags } = useInsertScriptTags({
-        componentOrHookName: "LoginPasskeysConditionalAuthenticate",
-        scriptTags: [
-            {
-                type: "module",
-                textContent: () => `
+  const { insertScriptTags } = useInsertScriptTags({
+    componentOrHookName: "LoginPasskeysConditionalAuthenticate",
+    scriptTags: [
+      {
+        type: "module",
+        textContent: () => `
                     import { authenticateByWebAuthn } from "${url.resourcesPath}/js/webauthnAuthenticate.js";
                     import { initAuthenticate } from "${url.resourcesPath}/js/passkeysConditionalAuth.js";
 
@@ -69,28 +91,28 @@ export function useScript(params: { authButtonId: string; kcContext: KcContextLi
                             passkeyButton.style.display = "block";
                         }
                     });
-                `
-            }
-        ]
-    });
+                `,
+      },
+    ],
+  });
 
-    onMounted(() => {
-        const stopWatch = watch(
-            () => i18n.value.isFetchingTranslations,
-            async isFetching => {
-                if (isFetching) {
-                    return;
-                }
+  onMounted(() => {
+    const stopWatch = watch(
+      () => i18n.value.isFetchingTranslations,
+      async (isFetching) => {
+        if (isFetching) {
+          return;
+        }
 
-                stopWatch();
+        stopWatch();
 
-                await waitForElementMountedOnDom({
-                    elementId: authButtonId
-                });
+        await waitForElementMountedOnDom({
+          elementId: authButtonId,
+        });
 
-                insertScriptTags();
-            },
-            { immediate: true }
-        );
-    });
+        insertScriptTags();
+      },
+      { immediate: true },
+    );
+  });
 }
