@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx tsx
+#!/usr/bin/env node
 import { NOT_IMPLEMENTED_EXIT_CODE, readParams } from "./core";
 
 const { buildContext, commandName } = readParams({ apiVersion: "v1" });
