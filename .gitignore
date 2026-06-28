@@ -3,6 +3,7 @@ dist/
 dist_keycloak/
 .keycloakify/
 *.log
+storybook-static/
 
 # Planning docs are kept local, not committed (per user preference)
 docs/superpowers/
