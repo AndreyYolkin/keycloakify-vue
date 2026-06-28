@@ -1,21 +1,20 @@
 {
-  "name": "keycloakify-vue-poc",
+  "name": "@keycloakify/vue",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build-keycloak-theme": "yarn build && keycloakify build",
     "test": "vitest run",
     "typecheck": "vue-tsc --noEmit",
-    "postinstall": "node scripts/link-custom-handler.mjs"
+    "storybook": "storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build"
   },
   "bin": {
     "_keycloakify-custom-handler": "./bin/main.ts"
   },
-  "dependencies": {
-    "vue": "^3.5.38"
+  "peerDependencies": {
+    "keycloakify": "^11.15.1",
+    "vue": "^3.5.0"
   },
   "devDependencies": {
     "@types/node": "^26.0.0",
@@ -29,6 +28,7 @@
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
     "vitest": "^4.1.9",
+    "vue": "^3.5.38",
     "vue-tsc": "^3.3.5"
   }
 }
