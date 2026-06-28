@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { crawl } from 'keycloakify/bin/tools/crawl';
+import { crawl } from './crawl';
 
 export function removeNodeModules(params: { nodeModulesDirPath: string }) {
   const { nodeModulesDirPath } = params;
