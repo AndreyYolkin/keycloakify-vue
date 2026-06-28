@@ -31,6 +31,21 @@ const SelectAuthenticator = defineAsyncComponent(() => import("./pages/SelectAut
 const SelectOrganization = defineAsyncComponent(() => import("./pages/SelectOrganization.vue"));
 const Terms = defineAsyncComponent(() => import("./pages/Terms.vue"));
 const UpdateEmail = defineAsyncComponent(() => import("./pages/UpdateEmail.vue"));
+const LoginResetOtp = defineAsyncComponent(() => import("./pages/LoginResetOtp.vue"));
+const LoginRecoveryAuthnCodeInput = defineAsyncComponent(() => import("./pages/LoginRecoveryAuthnCodeInput.vue"));
+const LoginOtp = defineAsyncComponent(() => import("./pages/LoginOtp.vue"));
+const LoginRecoveryAuthnCodeConfig = defineAsyncComponent(() => import("./pages/LoginRecoveryAuthnCodeConfig.vue"));
+const LoginResetPassword = defineAsyncComponent(() => import("./pages/LoginResetPassword.vue"));
+const LoginUpdatePassword = defineAsyncComponent(() => import("./pages/LoginUpdatePassword.vue"));
+const LoginPassword = defineAsyncComponent(() => import("./pages/LoginPassword.vue"));
+const LoginConfigTotp = defineAsyncComponent(() => import("./pages/LoginConfigTotp.vue"));
+const LoginUsername = defineAsyncComponent(() => import("./pages/LoginUsername.vue"));
+const WebauthnError = defineAsyncComponent(() => import("./pages/WebauthnError.vue"));
+const WebauthnRegister = defineAsyncComponent(() => import("./pages/WebauthnRegister.vue"));
+const WebauthnAuthenticate = defineAsyncComponent(() => import("./pages/WebauthnAuthenticate.vue"));
+const LoginPasskeysConditionalAuthenticate = defineAsyncComponent(
+    () => import("./pages/LoginPasskeysConditionalAuthenticate.vue")
+);
 
 const props = withDefaults(
     defineProps<{
@@ -103,6 +118,32 @@ const pageComponent = computed<Component>(() => {
             return Terms;
         case "update-email.ftl":
             return UpdateEmail;
+        case "login-reset-otp.ftl":
+            return LoginResetOtp;
+        case "login-recovery-authn-code-input.ftl":
+            return LoginRecoveryAuthnCodeInput;
+        case "login-otp.ftl":
+            return LoginOtp;
+        case "login-recovery-authn-code-config.ftl":
+            return LoginRecoveryAuthnCodeConfig;
+        case "login-reset-password.ftl":
+            return LoginResetPassword;
+        case "login-update-password.ftl":
+            return LoginUpdatePassword;
+        case "login-password.ftl":
+            return LoginPassword;
+        case "login-config-totp.ftl":
+            return LoginConfigTotp;
+        case "login-username.ftl":
+            return LoginUsername;
+        case "webauthn-error.ftl":
+            return WebauthnError;
+        case "webauthn-register.ftl":
+            return WebauthnRegister;
+        case "webauthn-authenticate.ftl":
+            return WebauthnAuthenticate;
+        case "login-passkeys-conditional-authenticate.ftl":
+            return LoginPasskeysConditionalAuthenticate;
         default:
             return NotImplemented;
     }
