@@ -2,9 +2,9 @@ import { mount, flushPromises } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import { nextTick } from "vue";
 import { createGetKcContextMock } from "keycloakify/login/KcContext";
-import Login from "../src/lib/login/pages/Login.vue";
-import Template from "../src/lib/login/Template.vue";
-import { i18nBuilder } from "../src/lib/login/i18n/i18nBuilder";
+import Login from "../src/login/pages/Login.vue";
+import Template from "../src/login/Template.vue";
+import { i18nBuilder } from "../src/login/i18n/i18nBuilder";
 
 describe("Login.vue render", () => {
     it("renders the login form (username, password, submit)", async () => {

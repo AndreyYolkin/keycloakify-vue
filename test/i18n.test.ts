@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { isVNode } from "vue";
-import { i18nBuilder } from "../src/lib/login/i18n/i18nBuilder";
+import { i18nBuilder } from "../src/login/i18n/i18nBuilder";
 
 describe("i18n bridge", () => {
     it("msg() returns a VNode, msgStr() returns a string", () => {
