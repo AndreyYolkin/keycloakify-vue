@@ -6,6 +6,8 @@ import type { I18n } from './i18n/i18n';
 import NotImplemented from './pages/NotImplemented.vue';
 
 const Account = defineAsyncComponent(() => import('./pages/Account.vue'));
+const Log = defineAsyncComponent(() => import('./pages/Log.vue'));
+const Sessions = defineAsyncComponent(() => import('./pages/Sessions.vue'));
 
 const props = defineProps<{
   kcContext: KcContext;
@@ -19,6 +21,10 @@ const pageComponent = computed<Component>(() => {
   switch (props.kcContext.pageId) {
     case 'account.ftl':
       return Account;
+    case 'log.ftl':
+      return Log;
+    case 'sessions.ftl':
+      return Sessions;
     default:
       return NotImplemented;
   }
