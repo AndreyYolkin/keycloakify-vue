@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ClassKey } from 'keycloakify/account/lib/kcClsx';
-import DefaultPage from '@keycloakify/vue/account/DefaultPage.vue';
-import Template from '@keycloakify/vue/account/Template.vue';
+import DefaultPage from '@andreyyolkin/keycloakify-vue/account/DefaultPage.vue';
+import Template from '@andreyyolkin/keycloakify-vue/account/Template.vue';
 import type { KcContext } from './KcContext';
 import { useI18n } from './i18n';
 

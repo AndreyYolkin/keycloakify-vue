@@ -146,7 +146,7 @@ export async function command(params: { buildContext: BuildContext }) {
       .toString('utf8');
     if (userProfileFormFieldsValue) {
       componentCode = componentCode.replace(
-        new RegExp(`from '@keycloakify/vue/login/components/(${componentBasenames.join('|')})`, 'g'),
+        new RegExp(`from '@andreyyolkin/keycloakify-vue/login/components/(${componentBasenames.join('|')})`, 'g'),
         `from './$1`,
       );
     }
@@ -191,10 +191,10 @@ export async function command(params: { buildContext: BuildContext }) {
     const modifiedKcPageFileCode = (() => {
       switch (pageIdOrComponent) {
         case templateValue:
-          return kcPageFileCode.replace(`@keycloakify/vue/${themeType}/Template`, './Template');
+          return kcPageFileCode.replace(`@andreyyolkin/keycloakify-vue/${themeType}/Template`, './Template');
         case userProfileFormFieldsValue:
           return kcPageFileCode.replace(
-            `@keycloakify/vue/login/components/UserProfileFormFields`,
+            `@andreyyolkin/keycloakify-vue/login/components/UserProfileFormFields`,
             './components/UserProfileFormFields',
           );
       }
@@ -237,7 +237,7 @@ export async function command(params: { buildContext: BuildContext }) {
           `+`,
           `     //...`,
           `     default:`,
-          `       return import('@keycloakify/vue/login/DefaultPage.vue');`,
+          `       return import('@andreyyolkin/keycloakify-vue/login/DefaultPage.vue');`,
           `   }`,
           ` }`,
         ].map((line) => {

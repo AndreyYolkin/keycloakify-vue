@@ -12,7 +12,7 @@ const distDirPath = pathJoin(rootDirPath, 'dist');
 const outDirPath = pathJoin(distDirPath, PACKAGE_DIRNAME);
 const srcDirPath = pathJoin(rootDirPath, 'src');
 
-console.log(chalk.cyan(`Building @keycloakify/vue...`));
+console.log(chalk.cyan(`Building @andreyyolkin/keycloakify-vue...`));
 const startTime = Date.now();
 
 // 1. Clean

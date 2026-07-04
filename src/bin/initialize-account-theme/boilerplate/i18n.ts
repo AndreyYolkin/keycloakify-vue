@@ -1,4 +1,4 @@
-import { i18nBuilder } from '@keycloakify/vue/account';
+import { i18nBuilder } from '@andreyyolkin/keycloakify-vue/account';
 import type { ThemeName } from '../kc.gen';
 
 /** @see: https://docs.keycloakify.dev/features/i18n */

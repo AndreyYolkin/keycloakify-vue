@@ -1,5 +1,5 @@
 {
-  "name": "@keycloakify/vue",
+  "name": "@andreyyolkin/keycloakify-vue",
   "description": "Vue Components for Keycloakify",
   "keywords": [
     "keycloak",
