@@ -18,7 +18,6 @@ defineProps<{ kcClsx: KcClsx; i18n: I18n }>();
             id="logout-sessions"
             name="logout-sessions"
             value="on"
-            :checked="true"
           />
           <component :is="i18n.msg('logoutOtherSessions')" />
         </label>
