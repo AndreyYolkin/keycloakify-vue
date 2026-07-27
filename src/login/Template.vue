@@ -93,11 +93,11 @@ function onTryAnotherWay() {
           :class="kcClsx('kcLocaleMainClass')"
           id="kc-locale"
         >
-        <div
-        id="kc-locale-wrapper"
-        :class="kcClsx('kcLocaleWrapperClass')"
-        >
-          <slot name="locale-selector">
+          <div
+            id="kc-locale-wrapper"
+            :class="kcClsx('kcLocaleWrapperClass')"
+          >
+            <slot name="locale-selector">
               <div
                 id="kc-locale-dropdown"
                 :class="clsx('menu-button-links', kcClsx('kcLocaleDropDownClass'))"
