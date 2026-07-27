@@ -93,49 +93,51 @@ function onTryAnotherWay() {
           :class="kcClsx('kcLocaleMainClass')"
           id="kc-locale"
         >
-          <div
-            id="kc-locale-wrapper"
-            :class="kcClsx('kcLocaleWrapperClass')"
-          >
-            <div
-              id="kc-locale-dropdown"
-              :class="clsx('menu-button-links', kcClsx('kcLocaleDropDownClass'))"
-            >
-              <button
-                :tabindex="1"
-                id="kc-current-locale-link"
-                :aria-label="i18n.msgStr('languages')"
-                aria-haspopup="true"
-                aria-expanded="false"
-                aria-controls="language-switch1"
+        <div
+        id="kc-locale-wrapper"
+        :class="kcClsx('kcLocaleWrapperClass')"
+        >
+          <slot name="locale-selector">
+              <div
+                id="kc-locale-dropdown"
+                :class="clsx('menu-button-links', kcClsx('kcLocaleDropDownClass'))"
               >
-                {{ i18n.currentLanguage.label }}
-              </button>
-              <ul
-                role="menu"
-                :tabindex="-1"
-                aria-labelledby="kc-current-locale-link"
-                aria-activedescendant=""
-                id="language-switch1"
-                :class="kcClsx('kcLocaleListClass')"
-              >
-                <li
-                  v-for="(enabledLanguage, i) in i18n.enabledLanguages"
-                  :key="enabledLanguage.languageTag"
-                  :class="kcClsx('kcLocaleListItemClass')"
-                  role="none"
+                <button
+                  :tabindex="1"
+                  id="kc-current-locale-link"
+                  :aria-label="i18n.msgStr('languages')"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls="language-switch1"
                 >
-                  <a
-                    role="menuitem"
-                    :id="`language-${i + 1}`"
-                    :class="kcClsx('kcLocaleItemClass')"
-                    :href="enabledLanguage.href"
+                  {{ i18n.currentLanguage.label }}
+                </button>
+                <ul
+                  role="menu"
+                  :tabindex="-1"
+                  aria-labelledby="kc-current-locale-link"
+                  aria-activedescendant=""
+                  id="language-switch1"
+                  :class="kcClsx('kcLocaleListClass')"
+                >
+                  <li
+                    v-for="(enabledLanguage, i) in i18n.enabledLanguages"
+                    :key="enabledLanguage.languageTag"
+                    :class="kcClsx('kcLocaleListItemClass')"
+                    role="none"
                   >
-                    {{ enabledLanguage.label }}
-                  </a>
-                </li>
-              </ul>
-            </div>
+                    <a
+                      role="menuitem"
+                      :id="`language-${i + 1}`"
+                      :class="kcClsx('kcLocaleItemClass')"
+                      :href="enabledLanguage.href"
+                    >
+                      {{ enabledLanguage.label }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </slot>
           </div>
         </div>
 
