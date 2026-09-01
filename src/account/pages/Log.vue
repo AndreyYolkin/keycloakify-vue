@@ -28,37 +28,37 @@ const { log } = kcContext;
       <div class="col-md-10">
         <h2><component :is="props.i18n.msg('accountLogHtmlTitle')" /></h2>
       </div>
+
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <td><component :is="props.i18n.msg('date')" /></td>
+            <td><component :is="props.i18n.msg('event')" /></td>
+            <td><component :is="props.i18n.msg('ip')" /></td>
+            <td><component :is="props.i18n.msg('client')" /></td>
+            <td><component :is="props.i18n.msg('details')" /></td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            v-for="(event, index) in log.events"
+            :key="index"
+          >
+            <td>{{ event.date ? new Date(event.date).toLocaleString() : '' }}</td>
+            <td>{{ event.event }}</td>
+            <td>{{ event.ipAddress }}</td>
+            <td>{{ event.client || '' }}</td>
+            <td>
+              <span
+                v-for="(detail, detailIndex) in event.details"
+                :key="detailIndex"
+                >{{ `${detail.key} = ${detail.value}` }}{{ detailIndex < event.details.length - 1 ? ', ' : '' }}</span
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <td><component :is="props.i18n.msg('date')" /></td>
-          <td><component :is="props.i18n.msg('event')" /></td>
-          <td><component :is="props.i18n.msg('ip')" /></td>
-          <td><component :is="props.i18n.msg('client')" /></td>
-          <td><component :is="props.i18n.msg('details')" /></td>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr
-          v-for="(event, index) in log.events"
-          :key="index"
-        >
-          <td>{{ event.date ? new Date(event.date).toLocaleString() : '' }}</td>
-          <td>{{ event.event }}</td>
-          <td>{{ event.ipAddress }}</td>
-          <td>{{ event.client || '' }}</td>
-          <td>
-            <span
-              v-for="(detail, detailIndex) in event.details"
-              :key="detailIndex"
-              >{{ `${detail.key} = ${detail.value}` }}{{ detailIndex < event.details.length - 1 ? ', ' : '' }}</span
-            >
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </component>
 </template>

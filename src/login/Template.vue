@@ -27,7 +27,8 @@ const { realm, auth, url, message, isAppInitiatedAction } = kcContext;
 const slots = useSlots();
 
 onMounted(() => {
-  document.title = props.documentTitle ?? props.i18n.msgStr('loginTitle', kcContext.realm.displayName);
+  document.title =
+    props.documentTitle ?? props.i18n.msgStr('loginTitle', kcContext.realm.displayName || kcContext.realm.name);
 });
 
 useSetClassName({ qualifiedName: 'html', className: kcClsx('kcHtmlClass') });
@@ -81,9 +82,8 @@ function onTryAnotherWay() {
       <div
         id="kc-header-wrapper"
         :class="kcClsx('kcHeaderWrapperClass')"
-      >
-        {{ i18n.msgStr('loginTitleHtml', realm.displayNameHtml) }}
-      </div>
+        v-html="kcSanitize(i18n.msgStr('loginTitleHtml', realm.displayNameHtml || realm.name))"
+      ></div>
     </div>
 
     <div :class="kcClsx('kcFormCardClass')">
