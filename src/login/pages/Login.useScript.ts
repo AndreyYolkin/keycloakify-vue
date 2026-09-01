@@ -18,8 +18,8 @@ type KcContextLike = {
   enableWebAuthnConditionalUI?: boolean;
 };
 
-assert<keyof KcContextLike extends keyof KcContext.LoginPassword ? true : false>();
-assert<KcContext.LoginPassword extends KcContextLike ? true : false>();
+assert<keyof KcContextLike extends keyof KcContext.Login ? true : false>();
+assert<KcContext.Login extends KcContextLike ? true : false>();
 
 type I18nLike = {
   msgStr: (key: 'webauthn-unsupported-browser-text' | 'passkey-unsupported-browser-text') => string;
@@ -41,7 +41,7 @@ export function useScript(params: { webAuthnButtonId: string; kcContext: KcConte
   } = kcContext;
 
   const { insertScriptTags } = useInsertScriptTags({
-    componentOrHookName: 'LoginPassword',
+    componentOrHookName: 'Login',
     scriptTags: [
       {
         type: 'module',

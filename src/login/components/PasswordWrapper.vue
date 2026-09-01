@@ -8,6 +8,7 @@ const props = defineProps<{
   kcClsx: KcClsx;
   i18n: I18n;
   passwordInputId: string;
+  tabIndex?: number;
 }>();
 
 const isPasswordRevealed = ref(false);
@@ -28,6 +29,7 @@ watch(
     <slot />
     <button
       type="button"
+      :tabindex="tabIndex"
       :class="kcClsx('kcFormPasswordVisibilityButtonClass')"
       :aria-label="i18n.msgStr(isPasswordRevealed ? 'hidePassword' : 'showPassword')"
       :aria-controls="passwordInputId"

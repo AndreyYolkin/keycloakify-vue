@@ -3,10 +3,11 @@ import { kcSanitize } from 'keycloakify/lib/kcSanitize';
 import type { KcContext } from 'keycloakify/login/KcContext';
 import { getKcClsx } from 'keycloakify/login/lib/kcClsx';
 import { clsx } from 'keycloakify/tools/clsx';
-import { computed, ref } from 'vue';
+import { computed, ref, toRef } from 'vue';
 import PasswordWrapper from '../components/PasswordWrapper.vue';
 import type { I18n } from '../i18n/i18n';
 import type { PageProps } from './PageProps';
+import { useScript } from './Login.useScript';
 
 const props = defineProps<PageProps<Extract<KcContext, { pageId: 'login.ftl' }>, I18n>>();
 
@@ -16,7 +17,18 @@ const { kcClsx } = getKcClsx({
 });
 
 const kcContext = props.kcContext;
-const { social, realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField } = kcContext;
+const {
+  social,
+  realm,
+  url,
+  usernameHidden,
+  login,
+  auth,
+  registrationDisabled,
+  messagesPerField,
+  enableWebAuthnConditionalUI,
+  authenticators,
+} = kcContext;
 
 const isLoginButtonDisabled = ref(false);
 
@@ -28,6 +40,14 @@ function onSubmit() {
   isLoginButtonDisabled.value = true;
   return true;
 }
+
+const webAuthnButtonId = 'authenticateWebAuthnButton';
+
+useScript({
+  webAuthnButtonId,
+  kcContext,
+  i18n: toRef(props, 'i18n'),
+});
 </script>
 
 <template>
@@ -130,7 +150,7 @@ function onSubmit() {
               :value="login.username ?? ''"
               type="text"
               autofocus
-              autocomplete="username"
+              :autocomplete="enableWebAuthnConditionalUI ? 'username webauthn' : 'username'"
               :aria-invalid="messagesPerField.existsError('username', 'password')"
             />
             <span
@@ -151,6 +171,7 @@ function onSubmit() {
             </label>
             <PasswordWrapper
               :kcClsx="kcClsx"
+              :tabIndex="4"
               :i18n="i18n"
               passwordInputId="password"
             >
@@ -226,5 +247,69 @@ function onSubmit() {
         </form>
       </div>
     </div>
+
+    <template v-if="enableWebAuthnConditionalUI">
+      <form
+        id="webauth"
+        :action="url.loginAction"
+        method="post"
+      >
+        <input
+          type="hidden"
+          id="clientDataJSON"
+          name="clientDataJSON"
+        />
+        <input
+          type="hidden"
+          id="authenticatorData"
+          name="authenticatorData"
+        />
+        <input
+          type="hidden"
+          id="signature"
+          name="signature"
+        />
+        <input
+          type="hidden"
+          id="credentialId"
+          name="credentialId"
+        />
+        <input
+          type="hidden"
+          id="userHandle"
+          name="userHandle"
+        />
+        <input
+          type="hidden"
+          id="error"
+          name="error"
+        />
+      </form>
+
+      <template v-if="authenticators !== undefined && authenticators.authenticators.length !== 0">
+        <form
+          id="authn_select"
+          :class="kcClsx('kcFormClass')"
+        >
+          <input
+            v-for="(authenticator, i) in authenticators.authenticators"
+            :key="i"
+            type="hidden"
+            name="authn_use_chk"
+            :value="authenticator.credentialId"
+            readonly
+          />
+        </form>
+      </template>
+
+      <br />
+
+      <input
+        :id="webAuthnButtonId"
+        type="button"
+        :class="kcClsx('kcButtonClass', 'kcButtonDefaultClass', 'kcButtonBlockClass', 'kcButtonLargeClass')"
+        :value="i18n.msgStr('passkey-doAuthenticate')"
+      />
+    </template>
   </component>
 </template>
