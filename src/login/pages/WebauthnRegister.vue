@@ -69,6 +69,11 @@ useScript({ authButtonId, kcContext, i18n: toRef(props, 'i18n') });
         />
         <input
           type="hidden"
+          id="authenticatorAttachment"
+          name="authenticatorAttachment"
+        />
+        <input
+          type="hidden"
           id="error"
           name="error"
         />

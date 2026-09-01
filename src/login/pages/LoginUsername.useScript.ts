@@ -13,6 +13,8 @@ type KcContextLike = {
   userVerification: KcContext.WebauthnAuthenticate['userVerification'];
   rpId: string;
   createTimeout: number | string;
+  mediation?: string;
+  authenticatorAttachment?: string;
   enableWebAuthnConditionalUI?: boolean;
 };
 
@@ -27,7 +29,16 @@ type I18nLike = {
 export function useScript(params: { webAuthnButtonId: string; kcContext: KcContextLike; i18n: Ref<I18nLike> }) {
   const { webAuthnButtonId, kcContext, i18n } = params;
 
-  const { url, isUserIdentified, challenge, userVerification, rpId, createTimeout } = kcContext;
+  const {
+    url,
+    isUserIdentified,
+    challenge,
+    userVerification,
+    rpId,
+    createTimeout,
+    mediation,
+    authenticatorAttachment,
+  } = kcContext;
 
   const { insertScriptTags } = useInsertScriptTags({
     componentOrHookName: 'LoginUsername',
@@ -44,7 +55,9 @@ export function useScript(params: { webAuthnButtonId: string; kcContext: KcConte
                         challenge : ${JSON.stringify(challenge)},
                         userVerification : ${JSON.stringify(userVerification)},
                         rpId : ${JSON.stringify(rpId)},
-                        createTimeout : ${createTimeout}
+                        createTimeout : ${JSON.stringify(createTimeout)},
+                        mediation : ${JSON.stringify(mediation)},
+                        authenticatorAttachment : ${JSON.stringify(authenticatorAttachment)}
                     };
                     authButton.addEventListener("click", () => {
                         authenticateByWebAuthn({
