@@ -41,6 +41,14 @@ The easiest way to get started is the official starter template:
   and `IdpReviewUserProfile`.
 - **`i18nBuilder`** — factory for wiring Keycloakify's `noJsx` i18n engine into Vue (returns `msg()` /
   `advancedMsg()` that produce sanitized `VNode`s).
+  > **`withCustomTranslations` must be called from a plain `.ts`/`.tsx`/`.js` file, never from a `.vue` SFC.**
+  > At build time, `keycloakify`'s `generateMessageProperties` step statically scans your theme source for a
+  > `withCustomTranslations({...})` call to produce the server-side `messages_<lang>.properties` bundle — but
+  > it only scans files matching `/\.(js|ts|tsx)$/`, so a call placed inside a `<script setup>` block of a
+  > `.vue` file is silently skipped and those keys never reach the server bundle (client-side `msg()` still
+  > works, which can make the gap easy to miss). Keep your `i18nBuilder(...).withCustomTranslations(...)`
+  > call in a dedicated `i18n.ts` (as in this repo's `stories/login/i18n.ts`) and import it from your `.vue`
+  > components instead.
 - **Account theme** — importable from `@andreyyolkin/keycloakify-vue/account`: its own `DefaultPage` + `Template`,
   the 7 account pages at `@andreyyolkin/keycloakify-vue/account/pages/*.vue`, and an account `i18nBuilder`.
 - **`bin` handlers** — `_keycloakify-custom-handler` delegates `update-kc-gen`, `eject-page`,
