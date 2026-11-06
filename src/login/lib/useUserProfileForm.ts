@@ -25,7 +25,11 @@ export namespace FormFieldError {
     export type Validator = { type: 'validator'; name: keyof Validators };
     export type PasswordPolicy = {
       type: 'passwordPolicy';
-      name: keyof PasswordPolicies;
+      /**
+       * passwordHistory and forceExpiredPasswordChange can't be validated client side
+       * (they require the stored credentials), they are only informative.
+       */
+      name: Exclude<keyof PasswordPolicies, 'passwordHistory' | 'forceExpiredPasswordChange'>;
     };
     export type Server = { type: 'server' };
     export type Other = {
