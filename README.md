@@ -22,7 +22,7 @@ packaging unchanged.
 npm install --save-dev @andreyyolkin/keycloakify-vue
 ```
 
-**Peer dependencies:** `keycloakify ^11.15.1` and `vue ^3.5.0` must be installed in your project.
+**Peer dependencies:** `keycloakify ^11.15.1` and `vue ^3.5.44` must be installed in your project.
 
 The easiest way to get started is the official starter template:
 
